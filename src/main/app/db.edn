@@ -1,3 +1,29 @@
-{:index {:md "caminho/arquivo/index.md" :title "..."}
- :pages #{16848493 {:md "..." :title "..." :tags []}}
- :posts #{16848494 {:md "..." :title "..." :tags []}}}
+{:author {:author/name "Author Name"
+          :author/email "author@email.com"}
+
+ :pages {1 {:page/id 1
+            :page/slug "index"
+            :page/path "gfm-syntax.md"}
+         2 {:page/id 2
+            :page/slug "index2"
+            :page/path "pages/index.md"}}
+
+ :list-pages [1 2]
+
+ :posts {1633043213778 {:post/id 1633043213778
+                        :post/path "gfm-syntax.md"
+                        :post/slug "post-1"
+                        :post/title "Post 1"
+                        :post/tags [:a]}
+         1633043213779 {:post/id 1633043213779
+                        :post/path "gfm-syntax.md"
+                        :post/slug "post-2"
+                        :post/title "Post 2"
+                        :post/tags [:a :b]}}
+
+ :list-posts [1633043213778 1633043213779]
+
+ :tags {:a {:tag/name "Tag A"
+            :tag/slug "tag-a"}
+        :b {:tag/name "Tag B"
+            :tag/slug "tag-b"}}}

@@ -8,8 +8,8 @@
 
 (defn ^:export init []
   (app/mount! app ui/Root "app")
-  (df/load! app :friends ui/PersonList)
-  (df/load! app :enemies ui/PersonList)
+  (df/load! app :author ui/Author)
+  (df/load! app :list-pages ui/Page)
   (js/console.log "Loaded!"))
 
 (defn ^:export refresh []

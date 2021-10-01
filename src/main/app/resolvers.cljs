@@ -1,41 +1,31 @@
 (ns app.resolvers
-  (:require [com.wsscode.pathom.connect :as pc]))
+  (:require [cljs.reader :as reader]
+            [cljs.core.async :as async]
+            [cljs.core.async.interop :refer-macros [<p!]]
+            [com.wsscode.pathom.connect :as pc]
+            [shadow.resource :as rc]))
 
-(def people-table
-  {1 {:person/id 1 :person/name "Sally" :person/age 32}
-   2 {:person/id 2 :person/name "Joe" :person/age 22}
-   3 {:person/id 3 :person/name "Fred" :person/age 11}
-   4 {:person/id 4 :person/name "Bobby" :person/age 55}})
+(def database (reader/read-string (rc/inline "./db.edn")))
 
-(def list-table
-  {:friends {:list/id     :friends
-             :list/label  "Friends"
-             :list/people [1 2]}
-   :enemies {:list/id     :enemies
-             :list/label  "Enemies"
-             :list/people [4 3]}})
+(pc/defresolver author-resolver [_ _]
+  {::pc/output [{:author [:author/id :author/name :author/email]}]}
+  {:author (:author database)})
 
-;; Given :person/id, this can generate the details of a person
-(pc/defresolver person-resolver [env {:person/keys [id]}]
-  {::pc/input  #{:person/id}
-   ::pc/output [:person/name :person/age]}
-  (get people-table id))
+(pc/defresolver page-body-resolver [_env {:page/keys [path]}]
+  {::pc/input  #{:page/path}
+   ::pc/output [:page/body]}
+  (async/go
+    (let [result (<p! (-> (js/fetch path)
+                          (.then #(.text %))))]
+      {:page/body result})))
 
-;; Given a :list/id, this can generate a list label and the people
-;; in that list (but just with their IDs)
-(pc/defresolver list-resolver [env {:list/keys [id]}]
-  {::pc/input  #{:list/id}
-   ::pc/output [:list/label {:list/people [:person/id]}]}
-  (when-let [list (get list-table id)]
-    (assoc list
-      :list/people (mapv (fn [id] {:person/id id}) (:list/people list)))))
+(pc/defresolver page-resolver [_env {:page/keys [id]}]
+  {::pc/input  #{:page/id}
+   ::pc/output [:page/id :page/slug :page/path]}
+  (get-in database [:pages id]))
 
-(pc/defresolver friends-resolver [env input]
-  {::pc/output [{:friends [:list/id]}]}
-  {:friends {:list/id :friends}})
+(pc/defresolver list-pages-resolver [_ _]
+  {::pc/output [{:list-pages [:page/id]}]}
+  {:list-pages (map (fn [id] {:page/id id}) (:list-pages database))})
 
-(pc/defresolver enemies-resolver [env input]
-  {::pc/output [{:enemies [:list/id]}]}
-  {:enemies {:list/id :enemies}})
-
-(def person-resolvers [person-resolver list-resolver friends-resolver enemies-resolver])
+(def resolvers [author-resolver page-body-resolver page-resolver list-pages-resolver ])

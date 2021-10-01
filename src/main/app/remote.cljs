@@ -1,7 +1,37 @@
 (ns app.remote
-  (:require [com.fulcrologic.fulcro.networking.mock-server-remote :refer [mock-http-server]]
+  (:require [cljs.core.async :as async]
+            [com.fulcrologic.fulcro.algorithms.tx-processing :as txn]
             [com.wsscode.pathom.connect :as pc]
-            [com.wsscode.pathom.core :as p]))
+            [com.wsscode.pathom.core :as p]
+            [edn-query-language.core :as eql]
+            [taoensso.timbre :as log]))
+
+(defn pseudo-remote-server
+  "Create a remote that mocks a Fulcro remote server.
+
+  :parser - A function `(fn [eql-query] async-channel)` that returns a core async channel with the result for the
+  given eql-query."
+  [{:keys [parser] :as options}]
+  (merge options
+    {:transmit! (fn transmit! [{:keys [_active-requests]} {:keys [::txn/ast ::txn/result-handler ::txn/update-handler] :as _send-node}]
+                  (let [edn           (eql/ast->query ast)
+                        ok-handler    (fn [result]
+                                        (try
+                                          (result-handler (select-keys result #{:transaction :status-code :body :status-text}))
+                                          (catch :default e
+                                            (log/error e "Result handler failed with an exception."))))
+                        error-handler (fn [error-result]
+                                        (try
+                                          (result-handler (merge {:status-code 500} (select-keys error-result #{:transaction :status-code :body :status-text})))
+                                          (catch :default e
+                                            (log/error e "Error handler failed with an exception."))))]
+                    (try
+                      (async/go
+                        (let [result (async/<! (parser edn))]
+                          (ok-handler {:transaction edn :status-code 200 :body result})))
+                      (catch :default _e
+                        (error-handler {:transaction edn :status-code 500})))))
+     :abort!    (fn abort! [_this _id])}))
 
 (defn new-parser [my-resolvers]
   (p/parallel-parser
@@ -17,7 +47,7 @@
 (defn local-pathom
   ([resolvers env]
    (let [parser    (new-parser resolvers)
-         transmit! (:transmit! (mock-http-server {:parser (fn [req] (parser env req))}))]
+         transmit! (:transmit! (pseudo-remote-server {:parser (fn [req] (parser env req))}))]
      {:transmit! (fn [this send-node]
                    (transmit! this send-node))}))
   ([resolvers]

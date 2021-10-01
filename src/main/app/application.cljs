@@ -4,4 +4,4 @@
             [com.fulcrologic.fulcro.application :as app]))
 
 (defonce app (app/fulcro-app
-              {:remotes {:remote (remote/local-pathom resolvers/person-resolvers)}}))
+              {:remotes {:remote (remote/local-pathom resolvers/resolvers)}}))

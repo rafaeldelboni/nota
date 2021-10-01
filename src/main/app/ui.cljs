@@ -1,37 +1,41 @@
 (ns app.ui
-  (:require
-   [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
-   [com.fulcrologic.fulcro.dom :as dom]))
+  (:require [com.fulcrologic.fulcro.algorithms.react-interop :as interop]
+            [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
+            [com.fulcrologic.fulcro.dom :as dom]
+            ["react-markdown" :as react-markdown]
+            ["remark-gfm" :as remark-gfm]))
 
-(defsc Person [this {:person/keys [id name age] :as props}]
-  {:query [:person/id
-           :person/name
-           :person/age]
-   :ident (fn [] [:person/id (:person/id props)])}
-  (dom/li
-   (dom/h5 (str name " (age: " age ")"))))
+(def ui-markdown (interop/react-factory react-markdown/default))
 
-(def ui-person (comp/factory Person {:keyfn :person/id}))
+(defsc Author [_this {:author/keys [name email] :as props}]
+  {:query [:author/name
+           :author/email]
+   :ident (fn [] [:author/email (:author/email props)])}
+  (dom/h2 (str name " (email: " email ")")))
 
-(defsc PersonList [this {:list/keys [id label people] :as props}]
-  {:query [:list/id
-           :list/label
-           {:list/people (comp/get-query Person)}]
-   :ident (fn [] [:list/id (:list/id props)])}
+(def ui-author (comp/factory Author {:keyfn :author/id}))
+
+(defsc Page [_this {:page/keys [id slug path body] :as props}]
+  {:query [:page/id
+           :page/slug
+           :page/path
+           :page/body]
+   :ident (fn [] [:page/id (:page/id props)])}
   (dom/div
-   (dom/ul
-    (map ui-person people))))
+   (dom/h2 (str id " - " slug " - " path))
+   (when body
+     (ui-markdown {:children body
+                   :remarkPlugins [remark-gfm/default]}))))
 
-(def ui-person-list (comp/factory PersonList))
+(def ui-page (comp/factory Page {:keyfn :page/id}))
 
-(defsc Root [this {:keys [friends enemies]}]
-  {:query         [{:friends (comp/get-query PersonList)}
-                   {:enemies (comp/get-query PersonList)}]
-   :initial-state {}}
+(defsc Root [_this {:keys [author list-pages]}]
+  {:query  [{:author (comp/get-query Author)}
+            {:list-pages (comp/get-query Page)}]}
   (dom/div
-   (dom/h3 "Friends")
-   (when friends
-     (ui-person-list friends))
-   (dom/h3 "Enemies")
-   (when enemies
-     (ui-person-list enemies))))
+   (dom/h1 "--> AUTHOR")
+   (when author
+     (ui-author author))
+   (dom/h1 "--> PAGES")
+   (when list-pages
+     (map ui-page list-pages))))
