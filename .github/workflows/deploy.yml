@@ -1,0 +1,76 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        os-version: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ${{ matrix.os-version }}
+
+    steps:
+    - name: Clone Repo
+      uses: actions/checkout@v2
+
+    - name: Prepare java
+      uses: actions/setup-java@v2.1.0
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Install clojure tools-deps
+      uses: DeLaGuardo/setup-clojure@master
+      with:
+        tools-deps: 1.10.3.920
+
+    - name: Test ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        npm install
+        npm run ci-tests
+
+  deploy:
+    needs: [tests]
+    strategy:
+      matrix:
+        os-version: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone Repo
+      uses: actions/checkout@v2
+
+    - name: Prepare java
+      uses: actions/setup-java@v2.1.0
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Install clojure tools-deps
+      uses: DeLaGuardo/setup-clojure@master
+      with:
+        tools-deps: 1.10.3.920
+
+    - name: Build ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        npm install
+        npm run release
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.ref == 'refs/heads/main' }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./resources/public

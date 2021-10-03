@@ -1,8 +1,7 @@
 {
-  "name": "fulcro-book",
+  "name": "stasis",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Static Markdown Blog/Site using Fulcro & Pathom with no backend",
   "scripts": {
     "watch": "shadow-cljs watch main",
     "watch:tests": "shadow-cljs watch tests",

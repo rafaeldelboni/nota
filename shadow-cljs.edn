@@ -3,7 +3,7 @@
  :builds   {:tests       {:target           :browser-test
                           :test-dir         "resources/public/js/test"
                           :ns-regexp        "-test$"
-                         ;; static required for mocking to work
+                          ;; static required for mocking to work
                           :compiler-options {:static-fns false}
                           :devtools         {:http-port          8022
                                              :http-resource-root "public"
