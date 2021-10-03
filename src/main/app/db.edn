@@ -1,21 +1,23 @@
-{:author {:author/name "Author Name"
-          :author/email "author@email.com"}
-
- :pages {"home"  {:page/name "Home"
+{:pages {"home"  {:page/name "Home"
                   :page/path "pages/index.md"}
          "about" {:page/name "About"
                   :page/path "pages/about.md"}}
 
+ :authors {1 {:author/name "Author Name"
+              :author/email "author@email.com"}}
+
+ :tags {:a {:tag/name "Tag A"}
+        :b {:tag/name "Tag B"}}
+
  :posts {"post-1" {:post/time 1633043213778
                    :post/path "gfm-syntax.md"
                    :post/title "Post 1"
-                   :post/tags [:a]}
+                   :post/description "Post 1 is about things and some stuff..."
+                   :post/tags [:a]
+                   :author/id 1}
          "post-2" {:post/time 1633043213779
                    :post/path "gfm-syntax.md"
                    :post/title "Post 2"
-                   :post/tags [:a :b]}}
-
- :tags {:a {:tag/name "Tag A"
-            :tag/slug "tag-a"}
-        :b {:tag/name "Tag B"
-            :tag/slug "tag-b"}}}
+                   :post/description "Post 2 is about things and some stuff..."
+                   :post/tags [:a :b]
+                   :author/id 1}}}

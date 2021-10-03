@@ -12,7 +12,6 @@
   (dr/initialize! app)
   (routing/start! app)
   (app/mount! app ui/Root "app" {:initialize-state? false})
-  (df/load! app :author ui/Author)
   (df/load! app :list-pages ui/ListPage)
   (js/console.log "Loaded!"))
 
