@@ -10,7 +10,7 @@
 (defn download-file-path!
   [id-key path]
   (async/go
-    (let [result (<p! (-> (js/fetch path)
+    (let [result (<p! (-> (js/fetch (str "./" path))
                           (.then #(.text %))))]
       {id-key result})))
 
