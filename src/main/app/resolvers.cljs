@@ -12,9 +12,9 @@
 (defn download-file-path!
   [id-key path]
   (async/go
-    (let [result (<p! (-> (if (str/blank? routing/base-route)
-                            (str "/" path)
-                            (str "/" routing/base-route "/" path))
+    (let [result (<p! (-> (if-not (str/blank? routing/path-prefix)
+                            (str "/" routing/path-prefix "/" path)
+                            (str "/" path))
                           js/fetch
                           (.then #(.text %))))]
       {id-key result})))
