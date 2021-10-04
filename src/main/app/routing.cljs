@@ -9,18 +9,13 @@
 
 (defonce history (atom nil))
 
-(defn printaln [a]
-  (js/console.log "println" a)
-  a)
-
 (defn route-to!
   "Change routes to the given route-string"
   [route-string]
   (pushy/set-token! @history (->> route-string
                                   (into [app-prefix])
                                   (remove str/blank?)
-                                  (str/join "/")
-                                  printaln)))
+                                  (str/join "/"))))
 
 (defn create-history [app]
   (pushy/pushy (fn [path]
@@ -31,8 +26,7 @@
                                            (remove str/blank?)
                                            (remove #(= % path-prefix))
                                            (remove #(= % app-prefix))
-                                           vec
-                                           printaln)]
+                                           vec)]
                    (if (or (empty? route-segments)
                            (= [path-prefix] route-segments))
                      (route-to! [default-route])
