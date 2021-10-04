@@ -3,29 +3,37 @@
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
             [pushy.core :as pushy]))
 
+(def base-route "stasis")
 (def app-prefix "#")
-(def default-route "/#/home")
+(def default-route "home")
 
 (defonce history (atom nil))
 
-(defn route-to! [route]
-  (let [route-string (if (vector? route)
-                       (str "/" (str/join "/" route))
-                       route)
-        route-string (if (str/starts-with? route-string (str "/" app-prefix))
-                       route-string
-                       (str "/" app-prefix route-string))]
-    (pushy/set-token! @history route-string)))
+(defn route-to!
+  "Change routes to the given route-string"
+  [route-string]
+  (pushy/set-token! @history (->> route-string
+                                  (into [base-route
+                                         app-prefix])
+                                  (remove str/blank?)
+                                  (str/join "/"))))
 
 (defn create-history [app]
   (pushy/pushy (fn [path]
-                 (let [route-segments (vec (rest (str/split path "/")))
-                       path-prefix (first route-segments)]
-                   (if (or (not= path-prefix app-prefix)
-                           (= 1 (count route-segments)))
-                     (route-to! default-route)
-                     (dr/change-route! app (rest route-segments)))))
-    identity))
+                 (let [real-path (if (= (first path) "/")
+                                   path
+                                   (str "/" path))
+                       path-vec (->> (str/split real-path "/")
+                                     (remove str/blank?)
+                                     (remove #(= % base-route))
+                                     (remove #(= % app-prefix))
+                                     vec)
+                       route-segments path-vec]
+                   (if (or (empty? route-segments)
+                           (= [base-route] route-segments))
+                     (route-to! [default-route])
+                     (dr/change-route app route-segments))))
+               identity))
 
 (defn start! [app]
   (pushy/start! (reset! history (create-history app))))
