@@ -1,6 +1,6 @@
 (ns app.resolvers
-  (:require [app.logics :as logics]
-            [app.adapters :as adapters]
+  (:require [app.adapters :as adapters]
+            [app.logics :as logics]
             [cljs.core.async :as async]
             [cljs.core.async.interop :refer-macros [<p!]]
             [cljs.reader :as reader]
@@ -10,7 +10,8 @@
 (defn download-file-path!
   [id-key path]
   (async/go
-    (let [result (<p! (-> (js/fetch (str "./" path))
+    (let [result (<p! (-> path
+                          js/fetch
                           (.then #(.text %))))]
       {id-key result})))
 
