@@ -1,4 +1,4 @@
-(ns app.pushy
+(ns stasis.routing.pushy
   (:require [clojure.string]
             [goog.dom :as dom]
             [goog.events :as events])

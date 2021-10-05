@@ -1,4 +1,4 @@
-(ns app.adapters)
+(ns stasis.adapters)
 
 (defn vec->map-list-id
   [vector id-key]

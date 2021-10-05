@@ -1,12 +1,12 @@
-(ns app.ui
-  (:require [app.routing :as routing]
-            [com.fulcrologic.fulcro.algorithms.react-interop :as interop]
+(ns stasis.ui
+  (:require [com.fulcrologic.fulcro.algorithms.react-interop :as interop]
             [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.data-fetch :as df]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr :refer [defrouter]]
             ["react-markdown" :as react-markdown]
-            ["remark-gfm" :as remark-gfm]))
+            ["remark-gfm" :as remark-gfm]
+            [stasis.routing :as routing]))
 
 (def ui-markdown (interop/react-factory react-markdown/default))
 
@@ -30,7 +30,7 @@
      (dom/h2 (str "Path " path))
      (ui-markdown {:children body
                    :remarkPlugins [remark-gfm/default]}))
-    (dom/div "404")))
+    (dom/div "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]
   {:query [:page/id
@@ -53,7 +53,7 @@
   {:router-targets [Page Posts]}
   (js/console.log current-state)
   (case current-state
-    :pending (dom/div "Loading...")
+    (nil :pending) (dom/div "Loading...")
     :failed (dom/div "Loading seems to have failed. Try another route.")
     (dom/div "Unknown route")))
 

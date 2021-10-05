@@ -1,10 +1,9 @@
-(ns app.remote
+(ns stasis.application.remote
   (:require [cljs.core.async :as async]
             [com.fulcrologic.fulcro.algorithms.tx-processing :as txn]
             [com.wsscode.pathom.connect :as pc]
             [com.wsscode.pathom.core :as p]
-            [edn-query-language.core :as eql]
-            [taoensso.timbre :as log]))
+            [edn-query-language.core :as eql]))
 
 (defn pseudo-remote-server
   "Create a remote that mocks a Fulcro remote server.
@@ -19,12 +18,12 @@
                                         (try
                                           (result-handler (select-keys result #{:transaction :status-code :body :status-text}))
                                           (catch :default e
-                                            (log/error e "Result handler failed with an exception."))))
+                                            (js/console.error e "Result handler failed with an exception."))))
                         error-handler (fn [error-result]
                                         (try
                                           (result-handler (merge {:status-code 500} (select-keys error-result #{:transaction :status-code :body :status-text})))
                                           (catch :default e
-                                            (log/error e "Error handler failed with an exception."))))]
+                                            (js/console.error e "Error handler failed with an exception."))))]
                     (try
                       (async/go
                         (let [result (async/<! (parser edn))]

@@ -1,25 +1,22 @@
-(ns app.resolvers
-  (:require [app.adapters :as adapters]
-            [app.logics :as logics]
-            [app.routing :as routing]
-            [cljs.core.async :as async]
+(ns stasis.resolvers
+  (:require [cljs.core.async :as async]
             [cljs.core.async.interop :refer-macros [<p!]]
-            [cljs.reader :as reader]
             [clojure.string :as str]
             [com.wsscode.pathom.connect :as pc]
-            [shadow.resource :as rc]))
+            [stasis.adapters :as adapters]
+            [stasis.application.data :as app-data]
+            [stasis.logics :as logics]))
 
 (defn download-file-path!
   [id-key path]
   (async/go
-    (let [result (<p! (-> (if-not (str/blank? routing/path-prefix)
-                            (str "/" routing/path-prefix "/" path)
+    (let [path-prefix (:path-prefix app-data/config)
+          result (<p! (-> (if-not (str/blank? path-prefix)
+                            (str "/" path-prefix "/" path)
                             (str "/" path))
                           js/fetch
                           (.then #(.text %))))]
       {id-key result})))
-
-(def database (reader/read-string (rc/inline "./db.edn")))
 
 (pc/defresolver page-body-resolver [_env {:page/keys [path]}]
   {::pc/input  #{:page/path}
@@ -36,7 +33,7 @@
    ::pc/output [:page/id
                 :page/name
                 :page/path]}
-  (-> database
+  (-> app-data/data
       :pages
       (get id)
       (logics/assoc-if-exists :page/id id)))
@@ -46,7 +43,7 @@
    ::pc/output [:author/id
                 :author/name
                 :author/email]}
-  (-> database
+  (-> app-data/data
       :authors
       (get id)
       (logics/assoc-if-exists :author/id id)))
@@ -55,7 +52,7 @@
   {::pc/input  #{:tag/id}
    ::pc/output [:tag/id
                 :tag/name]}
-  (-> database
+  (-> app-data/data
       :tags
       (get id)
       (logics/assoc-if-exists :tag/id id)))
@@ -69,7 +66,7 @@
                 :post/description
                 :post/tags
                 :author/id]}
-  (-> database
+  (-> app-data/data
       :posts
       (get id)
       (logics/assoc-if-exists :post/id id)
@@ -79,7 +76,7 @@
   {::pc/output [{:list-pages [:page/id
                               :page/name
                               :page/path]}]}
-  {:list-pages (-> database
+  {:list-pages (-> app-data/data
                    :pages
                    (adapters/hashmap->map-list-id :page/id))})
 

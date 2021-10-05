@@ -1,7 +1,7 @@
-(ns app.pushy-test
+(ns stasis.routing.pushy-test
   (:require [clojure.test :refer [async deftest is] :as test]
-            [app.pushy :as pushy]
-            [secretary.core :as secretary :refer-macros [defroute]])
+            [secretary.core :as secretary :refer-macros [defroute]]
+            [stasis.routing.pushy :as pushy])
   (:import goog.history.Html5History))
 
 (secretary/set-config! :prefix "/")

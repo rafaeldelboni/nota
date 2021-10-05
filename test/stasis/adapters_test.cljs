@@ -1,7 +1,7 @@
-(ns app.adapters-test
+(ns stasis.adapters-test
   (:require
    [clojure.test :refer [deftest]]
-   [app.adapters :as adapters]
+   [stasis.adapters :as adapters]
    [fulcro-spec.core :refer [behavior assertions]]))
 
 (declare =>)
