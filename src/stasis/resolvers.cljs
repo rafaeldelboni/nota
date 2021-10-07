@@ -80,10 +80,24 @@
                    :pages
                    (adapters/hashmap->map-list-id :page/id))})
 
+(pc/defresolver list-posts-resolver [env _]
+  {::pc/output [{:list-posts [:post/time
+                              :post/path
+                              :post/title
+                              :post/description]}]}
+  (let [{:keys [page page-size]
+         :or {page 0, page-size 10}} (-> env :ast :params)]
+    {:list-posts (-> app-data/data
+                   :posts
+                   (adapters/hashmap->map-list-id :post/id)
+                   (as-> posts (sort-by :post/time posts))
+                   (logics/pagination page page-size))}))
+
 (def resolvers [page-body-resolver
                 post-body-resolver
                 page-resolver
                 author-resolver
                 tag-resolver
                 post-resolver
-                list-pages-resolver])
+                list-pages-resolver
+                list-posts-resolver])

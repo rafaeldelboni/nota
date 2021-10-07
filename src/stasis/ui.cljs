@@ -20,10 +20,10 @@
    :route-segment   [:page/id]
    :will-enter      (fn [app {:page/keys [id]}]
                       (dr/route-deferred [:page/id id]
-                                         #(df/load app [:page/id id] Page
-                                                   {:post-mutation `dr/target-ready
-                                                    :post-mutation-params
-                                                    {:target [:page/id id]}})))}
+                                         #(df/load! app [:page/id id] Page
+                                                    {:post-mutation `dr/target-ready
+                                                     :post-mutation-params
+                                                     {:target [:page/id id]}})))}
   (if body
     (dom/div
      (dom/h2 (str "Id " id))
@@ -40,17 +40,26 @@
 
 (def ui-list-page (comp/factory ListPage {:keyfn :page/id}))
 
-(defsc Posts [_this _props]
-  {:ident         (fn [] [:component/id ::settings])
-   :query         [:settings]
-   :initial-state {:settings "stuff"}
+(defsc ListPost [_this _props]
+  {:ident         (fn [] [:component/id :list-posts])
+   :query         [{'(:list-posts {:page 0 :page-size 11})
+                    [:post/id
+                     :post/time
+                     :post/title
+                     :post/description]}]
    :route-segment ["post" "list"]
-   :will-enter    (fn [_this _route-params]
-                    (dr/route-immediate [:component/id ::settings]))}
+   :will-enter    (fn [app _route-params]
+                    (dr/route-deferred [:component/id :list-posts]
+                                       #(df/load! app [:component/id :list-posts] ListPost
+                                                  {:post-mutation `dr/target-ready
+                                                   :post-mutation-params
+                                                   {:target [:component/id :list-posts]}})))}
+  ;TODO render post list with links
+  (js/console.log "list/post/props" _props)
   (dom/div "Post List"))
 
 (defrouter TopRouter [_this {:keys [current-state]}]
-  {:router-targets [Page Posts]}
+  {:router-targets [Page ListPost]}
   (js/console.log current-state)
   (case current-state
     (nil :pending) (dom/div "Loading...")
@@ -66,7 +75,7 @@
    :initial-state {:root/router {}}}
   (dom/div
    (map ui-list-page list-pages)
-   (dom/button {:onClick #(routing/route-to! (dr/path-to Posts "list"))} "Go to Blog")
+   (dom/button {:onClick #(routing/route-to! (dr/path-to ListPost "list"))} "Go to Blog")
    (dom/hr)
    (ui-top-router router)
    (dom/hr)
