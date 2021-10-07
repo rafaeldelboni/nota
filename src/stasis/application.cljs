@@ -6,7 +6,8 @@
             [stasis.application.remote :as remote]
             [stasis.resolvers :as resolvers]
             [stasis.routing :as routing]
-            [stasis.ui :as ui]))
+            [stasis.ui :as ui]
+            [stasis.ui.pages :as ui.pages]))
 
 (defonce stasis-app (app/fulcro-app
               {:remotes {:remote (remote/local-pathom resolvers/resolvers)}}))
@@ -16,7 +17,7 @@
   (dr/initialize! stasis-app)
   (routing/start! stasis-app)
   (app/mount! stasis-app ui/Root "app" {:initialize-state? false})
-  (df/load! stasis-app :list-pages ui/ListPage)
+  (df/load! stasis-app :list-pages ui.pages/ListPage)
   (js/console.log "Loaded!"))
 
 (defn ^:export refresh []

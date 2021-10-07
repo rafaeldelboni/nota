@@ -93,6 +93,12 @@
                    (as-> posts (sort-by :post/time posts))
                    (logics/pagination page page-size))}))
 
+(pc/defresolver infinite-pages [env input]
+  {::pc/output [{:paginate/items [:item/id]}]}
+  (let [params (-> env :ast :params)
+        {:keys [start end]} params]
+    {:paginate/items (mapv (fn [id] {:item/id id}) (range start end))}))
+
 (def resolvers [page-body-resolver
                 post-body-resolver
                 page-resolver
@@ -100,4 +106,5 @@
                 tag-resolver
                 post-resolver
                 list-pages-resolver
-                list-posts-resolver])
+                list-posts-resolver
+                infinite-pages])

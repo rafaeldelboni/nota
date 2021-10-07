@@ -1,3 +1,3 @@
-{:path-prefix ""
+{:path-prefix "stasis"
  :app-prefix "#"
  :default-route "home"}
