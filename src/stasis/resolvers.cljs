@@ -80,24 +80,28 @@
                    :pages
                    (adapters/hashmap->map-list-id :page/id))})
 
-(pc/defresolver list-posts-resolver [env _]
-  {::pc/output [{:list-posts [:post/time
+(pc/defresolver list-posts-resolver [_ _]
+  {::pc/output [{:list-posts [:post/timestamp
                               :post/path
                               :post/title
                               :post/description]}]}
-  (let [{:keys [page page-size]
-         :or {page 0, page-size 10}} (-> env :ast :params)]
-    {:list-posts (-> app-data/data
+  {:list-posts (-> app-data/data
                    :posts
-                   (adapters/hashmap->map-list-id :post/id)
-                   (as-> posts (sort-by :post/time posts))
-                   (logics/pagination page page-size))}))
+                   (adapters/hashmap->map-list-id :post/id))})
 
-(pc/defresolver infinite-pages [env input]
-  {::pc/output [{:paginate/items [:item/id]}]}
-  (let [params (-> env :ast :params)
-        {:keys [start end]} params]
-    {:paginate/items (mapv (fn [id] {:item/id id}) (range start end))}))
+(pc/defresolver paginate-posts [env _]
+  {::pc/output [{:paginate/posts [:post/id
+                                  :post/timestamp
+                                  :post/path
+                                  :post/title
+                                  :post/description]}]}
+  (let [{:keys [page page-size]
+         :or {page 0 page-size 10}} (-> env :ast :params)]
+    {:paginate/posts (-> app-data/data
+                         :posts
+                         (adapters/hashmap->map-list-id :post/id)
+                         (as-> posts (sort-by :post/timestamp posts))
+                         (logics/pagination page page-size))}))
 
 (def resolvers [page-body-resolver
                 post-body-resolver
@@ -107,4 +111,4 @@
                 post-resolver
                 list-pages-resolver
                 list-posts-resolver
-                infinite-pages])
+                paginate-posts])

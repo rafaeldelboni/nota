@@ -7,7 +7,9 @@
             [stasis.routing :as routing]))
 
 (defrouter TopRouter [_this {:keys [current-state]}]
-  {:router-targets [ui.pages/Page ui.posts/ListPost]}
+  {:router-targets [ui.pages/Page
+                    ui.posts/Post
+                    ui.posts/PaginatedPosts]}
   (js/console.log current-state)
   (case current-state
     (nil :pending) (dom/div "Loading...")
@@ -23,7 +25,7 @@
    :initial-state {:root/router {}}}
   (dom/div
    (map ui.pages/ui-list-page list-pages)
-   (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts/ListPost "list"))} "Go to Blog")
+   (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts/PaginatedPosts "list"))} "Go to Blog")
    (dom/hr)
    (ui-top-router router)
    (dom/hr)
