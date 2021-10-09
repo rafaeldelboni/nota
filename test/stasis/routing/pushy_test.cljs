@@ -38,6 +38,7 @@
             (is @test-val)
             (is (nil? (pushy/stop! history)))
             (is (= "/foo" (pushy/get-token history)))
+            (pushy/replace-token! history "/")
             (done))
           500)))
 
@@ -50,5 +51,6 @@
           (fn []
             (is (false? @test-val))
             (is (= "/bar" (pushy/get-token history)))
+            (pushy/replace-token! history "/")
             (done))
           500)))

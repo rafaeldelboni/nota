@@ -3,14 +3,19 @@
             [com.fulcrologic.fulcro.components :as comp]
             [com.fulcrologic.fulcro.data-fetch :as df]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
+            [stasis.application.data :as data]
             [stasis.application.remote :as remote]
             [stasis.resolvers :as resolvers]
             [stasis.routing :as routing]
             [stasis.ui :as ui]
             [stasis.ui.pages :as ui.pages]))
 
-(defonce stasis-app (app/fulcro-app
-              {:remotes {:remote (remote/local-pathom resolvers/resolvers)}}))
+(defonce stasis-app
+  (app/fulcro-app {:remotes {:remote
+                             (remote/local-pathom resolvers/resolvers
+                                                  {:config data/config
+                                                   :database-fn data/database-fn
+                                                   :fetch-text-fn data/fetch-text-fn})}}))
 
 (defn ^:export init []
   (app/set-root! stasis-app ui/Root {:initialize-state? true})

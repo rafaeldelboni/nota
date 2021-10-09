@@ -4,7 +4,7 @@
            com.wsscode/pathom     {:mvn/version "2.4.0"}}
 
  :aliases {:tests {:extra-paths ["test"]
-                   :extra-deps  {fulcrologic/fulcro-spec {:mvn/version "3.1.8"}}}
+                   :extra-deps  {fulcrologic/fulcro-spec {:mvn/version "3.1.12"}}}
            :dev {:extra-paths ["src/dev"]
                  :extra-deps  {org.clojure/clojurescript   {:mvn/version "1.10.742"}
                                clj-commons/secretary       {:mvn/version "1.2.4"}
