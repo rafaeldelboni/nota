@@ -2,7 +2,8 @@
   (:require [clojure.string]
             [goog.dom :as dom]
             [goog.events :as events])
-  (:import goog.history.EventType
+  (:import goog.history.Event
+           goog.history.EventType
            goog.history.Html5History
            goog.history.Html5History.TokenTransformer
            goog.Uri))
@@ -10,13 +11,15 @@
 (defn- on-click [funk]
   (events/listen js/document "click" funk))
 
-(defn- update-history! [h path-prefix]
+(defn- update-history!
+  [^Html5History h path-prefix]
   (doto h
     (.setUseFragment false)
     (.setPathPrefix path-prefix)
     (.setEnabled true)))
 
-(defn- set-retrieve-token! [t]
+(defn- set-retrieve-token!
+  [^TokenTransformer t]
   (set! (.. t -retrieveToken)
         (fn [_path-prefix location]
           (str (.-pathname location)
@@ -24,7 +27,8 @@
                (.-hash location))))
   t)
 
-(defn- set-create-url! [t]
+(defn- set-create-url!
+  [^TokenTransformer t]
   (set! (.. t -createUrl)
         (fn [token path-prefix _location]
           (str path-prefix token)))
@@ -45,13 +49,15 @@
   (start! [this])
   (stop! [this]))
 
-(defn- processable-url? [uri]
+(defn- processable-url?
+  [^Uri uri]
   (and (not (clojure.string/blank? uri))                    ;; Blank URLs are not processable.
        (or (and (not (.hasScheme uri)) (not (.hasDomain uri))) ;; By default only process relative URLs + URLs matching window's origin
            (some? (re-matches (re-pattern (str "^" (.-origin js/location) ".*$"))
                               (str uri))))))
 
-(defn- get-token-from-uri [uri]
+(defn- get-token-from-uri
+  [^Uri uri]
   (let [path (.getPath uri)
         query (.getQuery uri)
         fragment (.getFragment uri)]
@@ -75,7 +81,7 @@
            identity-fn                    identity
            prevent-default-when-no-match? (constantly false)}}]
 
-  (let [history (new-history path-prefix)
+  (let [^Html5History history (new-history path-prefix)
         event-keys (atom nil)]
     (reify
       IHistory
@@ -98,10 +104,10 @@
 
         (swap! event-keys conj
                (events/listen history EventType.NAVIGATE
-                              (fn [e]
+                              (fn [^Event e]
                                 (when-let [match (-> (.-token e) match-fn identity-fn)]
                                   (dispatch-fn match)))))
-
+ 
         ;; Dispatch on initialization
         (when-let [match (-> (get-token this) match-fn identity-fn)]
           (dispatch-fn match))
