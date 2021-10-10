@@ -3,13 +3,9 @@
  :builds   {:tests       {:target           :browser-test
                           :test-dir         "resources/public/js/test"
                           :ns-regexp        "-test$"
-                          ;; static required for mocking to work
-                          :compiler-options {:static-fns false}
                           :devtools         {:http-port          8022
-                                             :http-resource-root "public"
                                              :http-root          "resources/public/js/test"}}
             :ci-tests   {:target           :karma
-                         :js-options       {:js-provider :shadow}
                          :compiler-options {:static-fns      false
                                             :external-config {:guardrails {:throw? true}}}
                          :output-to        "target/ci.js"

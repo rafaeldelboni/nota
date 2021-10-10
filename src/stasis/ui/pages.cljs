@@ -4,11 +4,11 @@
             [com.fulcrologic.fulcro.data-fetch :as df]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
-            [react-markdown :as react-markdown]
-            [remark-gfm :as remark-gfm]
+            ["react-markdown" :default ReactMarkdown]
+            ["remark-gfm" :default remarkGfm]
             [stasis.routing :as routing]))
 
-(def ui-markdown (interop/react-factory react-markdown/default))
+(def ui-markdown (interop/react-factory ReactMarkdown))
 
 (defsc Page [_this {:page/keys [id path body]}]
   {:query           [:ui/modified?
@@ -29,7 +29,7 @@
      (dom/h2 (str "Id " id))
      (dom/h2 (str "Path " path))
      (ui-markdown {:children body
-                   :remarkPlugins [remark-gfm/default]}))
+                   :remarkPlugins [remarkGfm]}))
     (dom/div "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]

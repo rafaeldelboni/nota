@@ -5,8 +5,8 @@
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.mutations :as m]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
-            [react-markdown :as react-markdown]
-            [remark-gfm :as remark-gfm]
+            ["react-markdown" :default ReactMarkdown]
+            ["remark-gfm" :default remarkGfm]
             [stasis.routing :as routing]))
 
 (def pagination-page-max-size 10)
@@ -67,7 +67,7 @@
   [{:keys [app]}]
   (comp/transact! app [(goto-page {:page-number 1})]))
 
-(def ui-markdown (interop/react-factory react-markdown/default))
+(def ui-markdown (interop/react-factory ReactMarkdown))
 
 (defsc Post [_this {:post/keys [id path body]}]
   {:query           [:ui/modified?
@@ -88,7 +88,7 @@
      (dom/h2 (str "Id " id))
      (dom/h2 (str "Path " path))
      (ui-markdown {:children body
-                   :remarkPlugins [remark-gfm/default]}))
+                   :remarkPlugins [remarkGfm]}))
     (dom/div "loading")))
 
 (defsc ListPost [_this {:post/keys [id title timestamp description]}]

@@ -57,6 +57,5 @@
               (assertions
                "Should root app state"
                (get-app-state :list-pages) => [[:page/id "home1"] [:page/id "about1"]])
-
               (done)
               500)))))
