@@ -1,14 +1,10 @@
 (ns stasis.ui.pages 
-  (:require [com.fulcrologic.fulcro.algorithms.react-interop :as interop]
-            [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
+  (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.data-fetch :as df]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
-            ["react-markdown" :default ReactMarkdown]
-            ["remark-gfm" :default remarkGfm]
-            [stasis.routing :as routing]))
-
-(def ui-markdown (interop/react-factory ReactMarkdown))
+            [stasis.routing :as routing]
+            [stasis.ui.markdown :as markdown]))
 
 (defsc Page [_this {:page/keys [id path body]}]
   {:query           [:ui/modified?
@@ -28,8 +24,7 @@
     (dom/div
      (dom/h2 (str "Id " id))
      (dom/h2 (str "Path " path))
-     (ui-markdown {:children body
-                   :remarkPlugins [remarkGfm]}))
+     (markdown/render {:body body}))
     (dom/div "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]

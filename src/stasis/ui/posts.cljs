@@ -1,13 +1,11 @@
 (ns stasis.ui.posts
-  (:require [com.fulcrologic.fulcro.algorithms.react-interop :as interop]
-            [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
+  (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.data-fetch :as df]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.mutations :as m]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
-            ["react-markdown" :default ReactMarkdown]
-            ["remark-gfm" :default remarkGfm]
-            [stasis.routing :as routing]))
+            [stasis.routing :as routing]
+            [stasis.ui.markdown :as markdown]))
 
 (def pagination-page-max-size 10)
 
@@ -67,8 +65,6 @@
   [{:keys [app]}]
   (comp/transact! app [(goto-page {:page-number 1})]))
 
-(def ui-markdown (interop/react-factory ReactMarkdown))
-
 (defsc Post [_this {:post/keys [id path body]}]
   {:query           [:ui/modified?
                      :post/id
@@ -87,8 +83,7 @@
     (dom/div
      (dom/h2 (str "Id " id))
      (dom/h2 (str "Path " path))
-     (ui-markdown {:children body
-                   :remarkPlugins [remarkGfm]}))
+     (markdown/render {:body body}))
     (dom/div "loading")))
 
 (defsc ListPost [_this {:post/keys [id title timestamp description]}]
@@ -102,13 +97,13 @@
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
           (dom/h1 title))
    (dom/p
-     (let [dt (js/Date. timestamp)]
-       (str (.getDate dt) "/"
-            (.getMonth dt) "/"
-            (.getFullYear dt) " "
-            (.getHours dt) ":"
-            (.getMinutes dt) ":"
-            (.getSeconds dt))))
+    (let [dt (js/Date. timestamp)]
+      (str (.getDate dt) "/"
+           (.getMonth dt) "/"
+           (.getFullYear dt) " "
+           (.getHours dt) ":"
+           (.getMinutes dt) ":"
+           (.getSeconds dt))))
    (dom/p description)))
 
 (def ui-list-post (comp/factory ListPost {:keyfn :post/id}))
