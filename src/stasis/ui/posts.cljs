@@ -5,24 +5,15 @@
             [com.fulcrologic.fulcro.mutations :as m]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
             [stasis.routing :as routing]
-            [stasis.ui.markdown :as markdown]))
+            [stasis.ui.markdown :as markdown]
+            [stasis.adapters :as adapters]))
 
 (def pagination-page-max-size 10)
 
+; TODO unit tests
 (defn page-exists? [state-map page-number]
   (let [page-items (get-in state-map [:pagination/by-number page-number :pagination/posts])]
     (boolean (seq page-items))))
-
-(defn init-page
-  "An idempotent init function that just ensures enough of a page exists to make the UI work.
-   Doesn't affect the items."
-  [state-map page-number]
-  (assoc-in state-map [:pagination/by-number page-number :pagination/number] page-number))
-
-(defn set-current-page
-  "Point the current list's current page to the correct page entity in the db (via ident)."
-  [state-map page-number]
-  (assoc-in state-map [:posts/by-id 1 :posts/current-page] [:pagination/by-number page-number]))
 
 (defn clear-page
   "Clear the given page (and associated items) from the app database."
@@ -34,6 +25,7 @@
       (update s :pagination/by-number dissoc page-number)
       (reduce (fn [acc id] (update acc :posts/by-id dissoc id)) s item-ids))))
 
+; TODO unit tests
 (defn gc-distant-pages
   "Clears loaded items from pages 5 or more steps away from the given page number."
   [state-map page-number]
@@ -41,6 +33,17 @@
             (if (< 4 (Math/abs (- page-number n)))
               (clear-page s n)
               s)) state-map (keys (:pagination/by-number state-map))))
+
+(defn init-page
+  "An idempotent init function that just ensures enough of a page exists to make the UI work.
+   Doesn't affect the items."
+  [state-map page-number]
+  (assoc-in state-map [:pagination/by-number page-number :pagination/number] page-number))
+
+(defn set-current-page
+  "Point the current list's current page to the correct page entity in the db (via ident)."
+  [state-map page-number]
+  (assoc-in state-map [:posts/by-id 1 :posts/current-page] [:pagination/by-number page-number]))
 
 (declare ListPost)
 
@@ -96,14 +99,7 @@
   (dom/div
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
           (dom/h1 title))
-   (dom/p
-    (let [dt (js/Date. timestamp)]
-      (str (.getDate dt) "/"
-           (.getMonth dt) "/"
-           (.getFullYear dt) " "
-           (.getHours dt) ":"
-           (.getMinutes dt) ":"
-           (.getSeconds dt))))
+   (dom/p (adapters/timestamp->utc-string timestamp "mmm dd, yyyy"))
    (dom/p description)))
 
 (def ui-list-post (comp/factory ListPost {:keyfn :post/id}))
