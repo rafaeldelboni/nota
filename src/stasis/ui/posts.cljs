@@ -10,7 +10,6 @@
 
 (def pagination-page-max-size 10)
 
-; TODO unit tests
 (defn page-exists? [state-map page-number]
   (let [page-items (get-in state-map [:pagination/by-number page-number :pagination/posts])]
     (boolean (seq page-items))))
@@ -25,14 +24,15 @@
       (update s :pagination/by-number dissoc page-number)
       (reduce (fn [acc id] (update acc :posts/by-id dissoc id)) s item-ids))))
 
-; TODO unit tests
 (defn gc-distant-pages
   "Clears loaded items from pages 5 or more steps away from the given page number."
   [state-map page-number]
   (reduce (fn [s n]
             (if (< 4 (Math/abs (- page-number n)))
               (clear-page s n)
-              s)) state-map (keys (:pagination/by-number state-map))))
+              s))
+          state-map
+          (keys (:pagination/by-number state-map))))
 
 (defn init-page
   "An idempotent init function that just ensures enough of a page exists to make the UI work.
