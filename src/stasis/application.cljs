@@ -17,6 +17,7 @@
                                                    :database-fn data/database-fn
                                                    :fetch-text-fn data/fetch-text-fn})}}))
 
+
 (defn ^:export init []
   (app/set-root! stasis-app ui/Root {:initialize-state? true})
   (dr/initialize! stasis-app)

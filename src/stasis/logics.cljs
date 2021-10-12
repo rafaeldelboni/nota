@@ -11,3 +11,11 @@
     (->> coll
          (drop itens-to-skip)
          (take size))))
+
+(defn filter-by-tag
+  [list-to-filter tag-key tag-id]
+  (->> list-to-filter
+       (filter
+        (fn [[_key val]]
+          (contains? (tag-key val) tag-id)))
+       (into {})))

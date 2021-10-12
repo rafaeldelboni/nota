@@ -1,7 +1,7 @@
 (ns stasis.logics-test
   (:require
-   [clojure.test :refer [deftest]]
    [stasis.logics :as logics]
+   [clojure.test :refer [deftest is]]
    [fulcro-spec.core :refer [behavior assertions]]))
 
 (declare =>)
@@ -23,3 +23,15 @@
              (logics/pagination (range 1 104) 10 10) => [101 102 103]
              "Should return empty"
              (logics/pagination (range 1 101) 10 10) => [])))
+
+(deftest filter-by-tag
+  (let [fixture {"post-1" {:post/title "Post 1" :post/tags #{:a}}
+                 "post-2" {:post/title "Post 2" :post/tags #{:a :b}}
+                 "post-3" {:post/title "Post 3" :post/tags #{:a :b :c}}}]
+    (is (= (logics/filter-by-tag fixture :post/tags :a)
+           fixture))
+    (is (= (logics/filter-by-tag fixture :post/tags :b)
+           {"post-2" {:post/title "Post 2" :post/tags #{:a :b}}
+            "post-3" {:post/title "Post 3" :post/tags #{:a :b :c}}}))
+    (is (= (logics/filter-by-tag fixture :post/tags :c)
+           {"post-3" {:post/title "Post 3" :post/tags #{:a :b :c}}}))))

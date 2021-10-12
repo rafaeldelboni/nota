@@ -44,6 +44,22 @@
       (get id)
       (logics/assoc-if-exists :tag/id id)))
 
+(pc/defresolver list-posts-tag-resolver
+  [{:keys [database-fn]} {:list-posts-tag/keys [id]}]
+  {::pc/input  #{:list-posts-tag/id}
+   ::pc/output [{:list-posts-tag/posts [:post/timestamp
+                                        :post/path
+                                        :post/title
+                                        :post/description]}]}
+  {:list-posts-tag/id id
+   :list-posts-tag/posts (-> :posts
+                             database-fn
+                             (logics/filter-by-tag :post/tags id)
+                             (adapters/hashmap->map-list-id :post/id))})
+
+
+(def alias-list-posts-tag-id (pc/alias-resolver :list-posts-tag/id :tag/id))
+
 (pc/defresolver post-resolver [{:keys [database-fn]} {:post/keys [id]}]
   {::pc/input  #{:post/id}
    ::pc/output [:post/id
@@ -95,6 +111,8 @@
                 page-resolver
                 author-resolver
                 tag-resolver
+                list-posts-tag-resolver
+                alias-list-posts-tag-id
                 post-resolver
                 list-pages-resolver
                 list-posts-resolver
