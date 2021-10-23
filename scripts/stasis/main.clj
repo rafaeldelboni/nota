@@ -1,7 +1,9 @@
 (ns stasis.main
-  (:require [clojure.string :as string]
+  (:require [babashka.fs :as fs]
+            [clojure.string :as string]
             [docopt.core :as docopt]))
 
+; logic
 (def ^:private +slug-tr-map+
   (zipmap "ąàáäâãåæăćčĉęèéëêĝĥìíïîĵłľńňòóöőôõðøśșšŝťțŭùúüűûñÿýçżźž"
           "aaaaaaaaaccceeeeeghiiiijllnnoooooooossssttuuuuuunyyczzz"))
@@ -14,6 +16,28 @@
           (string/replace #"[\P{ASCII}]+" "")
           (string/replace #"[^\w\s]+" "")
           (string/replace #"\s+" "-")))
+
+; file
+(defn get-file [filepath]
+  (->> filepath
+       (apply fs/path)
+       fs/file))
+
+(defn create-or-file [file]
+  (when-not (.exists file)
+    (fs/create-file file))
+  file)
+
+(def write-file-lock (Object.))
+
+(defn write-file! [filepath content append]
+  (locking write-file-lock
+    (-> filepath
+        get-file
+        create-or-file
+        (spit content :append append))))
+
+(write-file! ["." "resources" "public" "pages" "pipipi.md"] "# Popopo\n" true)
 
 (defn new-post-old [& _args]
   (let [post-title (-> (System/console)
@@ -31,6 +55,7 @@
              " Slug: " post-slug
              " Markdown:" file-path)))
 
+; main
 (def usage "Stasis
 Usage:
   bb <action> [options]
@@ -50,21 +75,21 @@ Options:
 (defn new-post
   [& _]
   (docopt/docopt
-    usage
-    *command-line-args*
-    (fn [arg-map]
-      (when (arg-map "--help")
-        (println usage)
-        (System/exit 0))
-      (let [action (or (arg-map "<action>") (arg-map "--action"))
-            id (or (arg-map "<id>") (arg-map "--id"))
-            name (arg-map "--name")
-            desc (arg-map "--desc")
-            slug (arg-map "--slug")
-            tags (arg-map "--tags")]
-        (println {:action action
-                  :id     id
-                  :name   name
-                  :desc   desc
-                  :slug   slug
-                  :tags   tags})))))
+   usage
+   *command-line-args*
+   (fn [arg-map]
+     (when (arg-map "--help")
+       (println usage)
+       (System/exit 0))
+     (let [action (or (arg-map "<action>") (arg-map "--action"))
+           id (or (arg-map "<id>") (arg-map "--id"))
+           name (arg-map "--name")
+           desc (arg-map "--desc")
+           slug (arg-map "--slug")
+           tags (arg-map "--tags")]
+       (println {:action action
+                 :id     id
+                 :name   name
+                 :desc   desc
+                 :slug   slug
+                 :tags   tags})))))
