@@ -1,5 +1,6 @@
 (ns stasis.main
   (:require [babashka.fs :as fs]
+            [borkdude.rewrite-edn :as r]
             [clojure.string :as string]
             [docopt.core :as docopt]))
 
@@ -30,14 +31,43 @@
 
 (def write-file-lock (Object.))
 
-(defn write-file! [filepath content append]
+(defn write-file! [content filepath append]
   (locking write-file-lock
     (-> filepath
         get-file
         create-or-file
         (spit content :append append))))
 
-(write-file! ["." "resources" "public" "pages" "pipipi.md"] "# Popopo\n" true)
+; db
+(defn read-db []
+  (-> ["src" "data.edn"]
+      get-file
+      slurp
+      r/parse-string))
+
+(defn save-db! [db]
+  (-> db
+      str
+      (write-file! ["src" "data.edn"] false)))
+
+(defn db->upsert!
+  [content type index db]
+  (-> db
+      (r/assoc-in [type index] content)
+      save-db!))
+
+(defn db->delete!
+  [type index db]
+  (-> db
+      (r/update type #(r/dissoc % index))
+      save-db!))
+
+(comment
+  (db->upsert! {:page/name "Peperoni"} :pages "chacaracatacara" (read-db))
+  (db->upsert! {:tag/name "Piriliri"} :tags :piriliri (read-db))
+  (db->delete! :pages "chacaracatacara" (read-db))
+  (db->delete! :tags :piriliri (read-db))
+  (write-file! "# Popopo\n" ["resources" "public" "pages" "pipipi.md"] true))
 
 (defn new-post-old [& _args]
   (let [post-title (-> (System/console)
