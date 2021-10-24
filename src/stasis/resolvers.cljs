@@ -49,7 +49,7 @@
   {::pc/input  #{:list-posts-tag/id}
    ::pc/output [{:list-posts-tag/posts [:post/timestamp
                                         :post/path
-                                        :post/title
+                                        :post/name
                                         :post/description]}]}
   {:list-posts-tag/id id
    :list-posts-tag/posts (-> :posts
@@ -65,7 +65,6 @@
    ::pc/output [:post/id
                 :post/name
                 :post/path
-                :post/title
                 :post/description
                 :post/tags
                 :author/id]}
@@ -86,7 +85,7 @@
 (pc/defresolver list-posts-resolver [{:keys [database-fn]} _]
   {::pc/output [{:list-posts [:post/timestamp
                               :post/path
-                              :post/title
+                              :post/name
                               :post/description]}]}
   {:list-posts (-> :posts
                    database-fn
@@ -96,7 +95,7 @@
   {::pc/output [{:paginate/posts [:post/id
                                   :post/timestamp
                                   :post/path
-                                  :post/title
+                                  :post/name
                                   :post/description]}]}
   (let [{:keys [page page-size]
          :or {page 0 page-size 10}} (:params ast)]

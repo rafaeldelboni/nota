@@ -9,15 +9,14 @@
  :tags {:a {:tag/name "Tag A"}
         :b {:tag/name "Tag B"}}
 
- :posts {"post-1" {:post/timestamp 1633043213778
-                   :post/path "gfm-syntax.md"
-                   :post/title "Post 1"
+ :posts {"post-1" {:post/name "Post 1"
                    :post/description "Post 1 is about things and some stuff..."
+                   :post/timestamp 1633043213778
+                   :post/path "gfm-syntax.md"
                    :post/tags #{:a}
                    :author/id 1}
-         "post-2" {:post/timestamp 1633043213779
-                   :post/path "gfm-syntax.md"
-                   :post/title "Post 2"
-                   :post/description "Post 2 is about things and some stuff..."
-                   :post/tags #{:a :b}
-                   :author/id 1}}}
+         "post-2" {:post/name "Post 2"
+                   :post/description "Post 2 is abouts posts making"
+                   :post/timestamp 1635089357544
+                   :post/path "posts/post-2.md"
+                   :post/tags #{:b :a}}}}

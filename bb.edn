@@ -3,4 +3,5 @@
  :deps {babashka/fs {:mvn/version "0.1.0"}
         borkdude/rewrite-edn {:mvn/version "0.1.0"}
         dev.nubank/docopt {:mvn/version "0.6.1-fix7"}}
- :tasks {new:post stasis.main/new-post}}
+ :tasks {new:post stasis.main/new-post
+         del:post stasis.main/del-post}}

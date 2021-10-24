@@ -41,16 +41,16 @@
      (ui.markdown/render {:body body}))
     (dom/div "loading")))
 
-(defsc ListPost [_this {:post/keys [id title timestamp description]}]
+(defsc ListPost [_this {:post/keys [id name timestamp description]}]
   {:query [:post/id
-           :post/title
+           :post/name
            :post/timestamp
            :post/description
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
   (dom/div
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
-          (dom/h1 title))
+          (dom/h1 name))
    (dom/p (adapters/timestamp->utc-string timestamp "mmm dd, yyyy"))
    (dom/p description)))
 

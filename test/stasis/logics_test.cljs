@@ -25,13 +25,13 @@
              (logics/pagination (range 1 101) 10 10) => [])))
 
 (deftest filter-by-tag
-  (let [fixture {"post-1" {:post/title "Post 1" :post/tags #{:a}}
-                 "post-2" {:post/title "Post 2" :post/tags #{:a :b}}
-                 "post-3" {:post/title "Post 3" :post/tags #{:a :b :c}}}]
+  (let [fixture {"post-1" {:post/name "Post 1" :post/tags #{:a}}
+                 "post-2" {:post/name "Post 2" :post/tags #{:a :b}}
+                 "post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}]
     (is (= (logics/filter-by-tag fixture :post/tags :a)
            fixture))
     (is (= (logics/filter-by-tag fixture :post/tags :b)
-           {"post-2" {:post/title "Post 2" :post/tags #{:a :b}}
-            "post-3" {:post/title "Post 3" :post/tags #{:a :b :c}}}))
+           {"post-2" {:post/name "Post 2" :post/tags #{:a :b}}
+            "post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}))
     (is (= (logics/filter-by-tag fixture :post/tags :c)
-           {"post-3" {:post/title "Post 3" :post/tags #{:a :b :c}}}))))
+           {"post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}))))
