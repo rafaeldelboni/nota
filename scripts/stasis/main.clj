@@ -271,8 +271,8 @@ Options:
 
 (def del-tag-doc "Stasis: New tag
 Usage:
-  new:tag <slug> [Options]
-  new:tag -h | --help
+  del:tag <slug> [Options]
+  del:tag -h | --help
 
 Options:
   -h --help          Show help.
@@ -289,4 +289,4 @@ Options:
        (println del-tag-doc)
        (System/exit 0))
      (let [id-slug (or (arg-map "<slug>") (arg-map "--slug"))]
-       (delete-item-action (keyword id-slug) :tags)))))
+       (delete-item-action id-slug :tags)))))
