@@ -41,7 +41,7 @@
                 :tag/name]}
   (-> :tags
       database-fn
-      (get id)
+      (logics/get-tag-override id)
       (logics/assoc-if-exists :tag/id id)))
 
 (pc/defresolver list-posts-tag-resolver

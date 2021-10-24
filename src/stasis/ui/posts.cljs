@@ -13,7 +13,7 @@
   {:ident :tag/id
    :query [:tag/id
            :tag/name]}
-  (dom/a {:onClick #(routing/route-to! (dr/path-to ListPostByTag (name id)))}
+  (dom/a {:onClick #(routing/route-to! (dr/path-to ListPostByTag id))}
          (dom/h5 (:tag/name tag))))
 
 (def link-tags (comp/factory LinkTags {:keyfn :tag/id}))
@@ -63,12 +63,11 @@
                    {:list-posts-tag/posts (comp/get-query ListPost)}]
    :route-segment ["tag" :list-posts-tag/id]
    :will-enter    (fn [app {:list-posts-tag/keys [id]}]
-                    (let [key-id (keyword id)]
-                      (dr/route-deferred [:list-posts-tag/id key-id]
-                                         #(df/load! app [:list-posts-tag/id key-id] ListPostByTag
-                                                    {:post-mutation `dr/target-ready
-                                                     :post-mutation-params
-                                                     {:target [:list-posts-tag/id key-id]}}))))}
+                    (dr/route-deferred [:list-posts-tag/id id]
+                                       #(df/load! app [:list-posts-tag/id id] ListPostByTag
+                                                  {:post-mutation `dr/target-ready
+                                                   :post-mutation-params
+                                                   {:target [:list-posts-tag/id id]}})))}
   (dom/div
    (dom/h1 (:tag/name props))
    (mapv ui-list-post posts)))

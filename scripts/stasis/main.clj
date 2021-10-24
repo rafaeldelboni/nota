@@ -22,13 +22,21 @@
 
 ; adapter
 (defn args->new-post
-  [{:keys [new-name desc slug tags]} resource-path now]
-  {:post/slug (if string/blank? (create-slug new-name) slug)
-   :post/name new-name
+  [{:keys [new-name desc tags]} resource-path now]
+  {:post/name new-name
    :post/description desc
    :post/timestamp now
    :post/path (string/join "/" (drop 2 resource-path))
-   :post/tags (-> tags (string/split #" ") (->> (map keyword)) set)})
+   :post/tags (-> tags (string/split #" ") set)})
+
+(defn args->new-page
+  [{:keys [new-name]} resource-path]
+  {:page/name new-name
+   :page/path (string/join "/" (drop 2 resource-path))})
+
+(defn args->new-tag
+  [{:keys [new-name]}]
+  {:tag/name new-name})
 
 (defn ->dialog-text
   [title data question]
@@ -36,8 +44,9 @@
     (format "%s:\n%s\n%s: " title (with-out-str (pp/pprint data)) question)
     (format "%s:\n%s: " title question)))
 
-(defn ->md-file [new-name desc]
-  (format "# %s\n\n%s \n" new-name desc))
+(defn ->md-file
+  [new-name desc]
+  (format "# %s\n\n%s \n" new-name (or desc "")))
 
 ; file
 (defn get-file [filepath]
@@ -93,38 +102,43 @@
       save-db!))
 
 ; actions
-(defn new-post-action [{:keys [type new-name desc slug] :as post-args}]
-  (let [id-slug (if string/blank? (create-slug new-name) slug)
+(defn new-item-action [{:keys [new-name desc slug] :as args} type]
+  (let [id-slug (if (string/blank? slug) (create-slug new-name) slug)
         now (System/currentTimeMillis)
         resource-path ["resources" "public" (name type) (str id-slug ".md")]
-        new-post (args->new-post post-args resource-path now)
+        new-item (case type
+                   :posts (args->new-post args resource-path now)
+                   :pages (args->new-page args resource-path)
+                   :tags  (args->new-tag args))
         dialog-result (-> (System/console)
-                          (.readLine (->dialog-text "New post"
-                                                    new-post
+                          (.readLine (->dialog-text "New"
+                                                    (assoc new-item :slug/id id-slug)
                                                     "Create? (Y/n)")
                                      nil)
                           String.)]
     (if (= (string/lower-case dialog-result) "n")
       (println "Not saved!")
-      (do (write-file! (->md-file new-name desc) resource-path true)
-          (db->upsert! (dissoc new-post :post/slug) type id-slug (read-db))
+      (do (when (contains? #{:posts :pages} type)
+            (write-file! (->md-file new-name desc) resource-path true))
+          (db->upsert! new-item type id-slug (read-db))
           (println "Saved!")))))
 
-(defn delete-post-action [id-slug]
-  (if-let [delete-post (get-in (read-db edn/read-string) [:posts id-slug])]
-    (let [resource-path ["resources" "public" "posts" (str id-slug ".md")]
+(defn delete-item-action [id-slug type]
+  (if-let [item-to-delete (get-in (read-db edn/read-string) [type id-slug])]
+    (let [resource-path ["resources" "public" (name type) (str id-slug ".md")]
           dialog-result (-> (System/console)
-                            (.readLine (->dialog-text "Delete post"
-                                                      delete-post
+                            (.readLine (->dialog-text "Delete"
+                                                      item-to-delete
                                                       "Are you sure? (y/N)")
                                        nil)
                             String.)]
       (if-not (= (string/lower-case dialog-result) "y")
         (println "Not deleted!")
-        (do (delete-file! resource-path)
-            (db->delete! :posts id-slug (read-db))
+        (do (when (contains? #{:posts :pages} type)
+              (delete-file! resource-path))
+            (db->delete! type id-slug (read-db))
             (println "Deleted!"))))
-    (println "Post not found.")))
+    (println "Item not found.")))
 
 ; inputs
 (def new-post-doc "Stasis: New post
@@ -153,11 +167,11 @@ Options:
            desc     (arg-map "--desc")
            slug     (arg-map "--slug")
            tags     (arg-map "--tags")]
-       (new-post-action {:new-name new-name
+       (new-item-action {:new-name new-name
                          :desc desc
                          :slug slug
-                         :tags tags
-                         :type :posts})))))
+                         :tags tags}
+                        :posts)))))
 
 (def del-post-doc "Stasis: New post
 Usage:
@@ -179,4 +193,100 @@ Options:
        (println del-post-doc)
        (System/exit 0))
      (let [id-slug (or (arg-map "<slug>") (arg-map "--slug"))]
-       (delete-post-action id-slug)))))
+       (delete-item-action id-slug :posts)))))
+
+(def new-page-doc "Stasis: New page
+Usage:
+  new:page <name> [Options]
+  new:page -h | --help
+
+Options:
+  -h --help          Show help.
+  -n --name <name>   page name.
+  -s --slug <slug>   page slug override. [Optional]
+")
+
+(defn new-page
+  [& _]
+  (docopt/docopt
+   new-page-doc
+   *command-line-args*
+   (fn [arg-map]
+     (when (arg-map "--help")
+       (println new-page-doc)
+       (System/exit 0))
+     (let [new-name (or (arg-map "<name>") (arg-map "--name"))
+           slug     (arg-map "--slug")]
+       (new-item-action {:new-name new-name
+                         :slug slug}
+                        :pages)))))
+
+(def del-page-doc "Stasis: New page
+Usage:
+  new:page <slug> [Options]
+  new:page -h | --help
+
+Options:
+  -h --help          Show help.
+  -s --slug <slug>   page slug/id.
+")
+
+(defn del-page
+  [& _]
+  (docopt/docopt
+   del-page-doc
+   *command-line-args*
+   (fn [arg-map]
+     (when (arg-map "--help")
+       (println del-page-doc)
+       (System/exit 0))
+     (let [id-slug (or (arg-map "<slug>") (arg-map "--slug"))]
+       (delete-item-action id-slug :pages)))))
+
+(def new-tag-doc "Stasis: New tag
+Usage:
+  new:tag <slug> <name> [Options]
+  new:tag -h | --help
+
+Options:
+  -h --help          Show help.
+  -s --slug <slug>   tag slug/id.
+  -n --name <name>   tag name.
+")
+
+(defn new-tag
+  [& _]
+  (docopt/docopt
+   new-tag-doc
+   *command-line-args*
+   (fn [arg-map]
+     (when (arg-map "--help")
+       (println new-tag-doc)
+       (System/exit 0))
+     (let [new-name (or (arg-map "<name>") (arg-map "--name"))
+           slug     (or (arg-map "<slug>") (arg-map "--slug"))]
+       (new-item-action {:new-name new-name
+                         :slug slug}
+                        :tags)))))
+
+(def del-tag-doc "Stasis: New tag
+Usage:
+  new:tag <slug> [Options]
+  new:tag -h | --help
+
+Options:
+  -h --help          Show help.
+  -s --slug <slug>   tag slug/id.
+")
+
+(defn del-tag
+  [& _]
+  (docopt/docopt
+   del-tag-doc
+   *command-line-args*
+   (fn [arg-map]
+     (when (arg-map "--help")
+       (println del-tag-doc)
+       (System/exit 0))
+     (let [id-slug (or (arg-map "<slug>") (arg-map "--slug"))]
+       (delete-item-action (keyword id-slug) :tags)))))

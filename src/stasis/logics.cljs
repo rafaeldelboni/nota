@@ -1,4 +1,5 @@
-(ns stasis.logics)
+(ns stasis.logics 
+  (:require [clojure.string :as string]))
 
 (defn assoc-if-exists
   [value k v]
@@ -19,3 +20,9 @@
         (fn [[_key val]]
           (contains? (tag-key val) tag-id)))
        (into {})))
+
+(defn get-tag-override
+  [tags id]
+  (or (get tags id)
+      {:tag/id id
+       :tag/name (string/capitalize id)}))
