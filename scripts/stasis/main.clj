@@ -175,8 +175,8 @@ Options:
 
 (def del-post-doc "Stasis: New post
 Usage:
-  new:post <slug> [Options]
-  new:post -h | --help
+  del:post <slug> [Options]
+  del:post -h | --help
 
 Options:
   -h --help          Show help.
@@ -223,8 +223,8 @@ Options:
 
 (def del-page-doc "Stasis: New page
 Usage:
-  new:page <slug> [Options]
-  new:page -h | --help
+  del:page <slug> [Options]
+  del:page -h | --help
 
 Options:
   -h --help          Show help.
