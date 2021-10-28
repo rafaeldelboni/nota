@@ -37,3 +37,22 @@ jobs:
     - run: |
         npm install
         npm run ci-tests
+
+  tests-bb:
+    strategy:
+      matrix:
+        os-version: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ${{ matrix.os-version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.3.0
+        with:
+          babashka-version: 0.6.2
+
+      - name: Tests BB Scripts
+        run: bb tests

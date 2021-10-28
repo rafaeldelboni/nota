@@ -8,4 +8,6 @@
          new:page stasis.main/new-page
          del:page stasis.main/del-page
          new:tag stasis.main/new-tag
-         del:tag stasis.main/del-tag}}
+         del:tag stasis.main/del-tag
+         tests (do (load-file "scripts/stasis/tests.clj")
+                   (clojure.test/run-tests 'stasis.tests))}}
