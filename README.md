@@ -1,6 +1,54 @@
 # Stasis
 Static Markdown Blog/Site using Fulcro &amp; Pathom with no backend
 
+# Prerequisites
+Things you need installed to use this repository
+
+- [nodejs](https://nodejs.dev/download)
+- [clojure](https://clojure.org/guides/getting_started)
+- [babashka](https://github.com/babashka/babashka#installation)
+
+# Developers
+Commands and alias for tooling while developing stasis.
+
+## Install dependencies
+```bash
+npm install
+```
+
+## Set configurations
+Set the [`src/config.edn`](https://github.com/rafaeldelboni/stasis/blob/main/src/config.edn) with your keys or the corresponding enviroment variables.  
+
+## Commands
+
+### Local build
+Start shadow-cljs watching and serving main in [`localhost:8000`](http://localhost:8000)
+```bash
+npm run watch
+```
+
+### Tests
+Start shadow-cljs watching and serving tests in [`localhost:8022`](http://localhost:8022)
+```bash
+npm run watch:tests
+```
+
+Run **Karma** tests targeted for running CI tests with *Headless Chrome Driver*
+```bash
+npm run ci-tests
+```
+
+Run **Babashka** script tests
+```bash
+bb tests
+```
+
+### Deploy
+Build the release package to production deploy
+```bash
+npm run release
+```
+
 # CLI Commands
 For more information on optional arguments or how to use the commands you can always add an `-h` at the end of the command. (Eg. `bb del:post -h`)
 
@@ -118,42 +166,7 @@ Delete:
 Are you sure? (y/N):
 ```
 
-# Developers
-Commands and alias for tooling while developing stasis.
-
-## Install dependencies
-```bash
-npm install
-```
-
-## Set configurations
-Set the [`src/config.edn`](https://github.com/rafaeldelboni/stasis/blob/main/src/config.edn) with your keys or the corresponding enviroment variables.  
-
-## Commands
-
-### Local build
-Start shadow-cljs watching and serving main in [`localhost:8000`](http://localhost:8000)
-```bash
-npm run watch
-```
-
-### Tests
-Start shadow-cljs watching and serving tests in [`localhost:8022`](http://localhost:8022)
-```bash
-npm run watch:tests
-```
-
-Run **Karma** tests targeted for running CI tests with *Headless Chrome Driver*
-```bash
-npm run ci-tests
-```
-
-### Deploy
-Build the release package to production deploy
-```bash
-npm run release
-```
-
 # License
 This is free and unencumbered software released into the public domain.  
 For more information, please refer to <http://unlicense.org>
+
