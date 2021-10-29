@@ -6,7 +6,7 @@
 
 (declare =>)
 
-(deftest assoc-if-exists
+(deftest assoc-if-exists-test
   (behavior "assoc only if value isn't nil"
             (assertions
              "Should return nil"
@@ -14,7 +14,7 @@
              "Should return assoc'ed maps"
              (logics/assoc-if-exists {:a 1} :b 2) => {:a 1 :b 2})))
 
-(deftest pagination
+(deftest pagination-test
   (behavior "assoc only if value isn't nil"
             (assertions
              "Should return paginated list"
@@ -24,7 +24,7 @@
              "Should return empty"
              (logics/pagination (range 1 101) 10 10) => [])))
 
-(deftest filter-by-tag
+(deftest filter-by-tag-test
   (let [fixture {"post-1" {:post/name "Post 1" :post/tags #{:a}}
                  "post-2" {:post/name "Post 2" :post/tags #{:a :b}}
                  "post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}]
@@ -35,3 +35,12 @@
             "post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}))
     (is (= (logics/filter-by-tag fixture :post/tags :c)
            {"post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}))))
+
+(deftest order-by-desc-test
+  (let [fixture [{:post/name "Post 1" :post/timestamp 1}
+                 {:post/name "Post 2" :post/timestamp 2}
+                 {:post/name "Post 3" :post/timestamp 3}]]
+    (is (= (logics/order-by-desc fixture :post/timestamp)
+           [{:post/name "Post 3" :post/timestamp 3}
+            {:post/name "Post 2" :post/timestamp 2}
+            {:post/name "Post 1" :post/timestamp 1}]))))

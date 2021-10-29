@@ -12,7 +12,6 @@
                     ui.posts/Post
                     ui.posts/ListPostByTag
                     ui.posts.pagination/PaginatedPosts]}
-  (js/console.log current-state)
   (case current-state
     (nil :pending) (dom/div "Loading...")
     :failed (dom/div "Loading seems to have failed. Try another route.")

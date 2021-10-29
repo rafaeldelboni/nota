@@ -55,7 +55,8 @@
    :list-posts-tag/posts (-> :posts
                              database-fn
                              (logics/filter-by-tag :post/tags id)
-                             (adapters/hashmap->map-list-id :post/id))})
+                             (adapters/hashmap->map-list-id :post/id)
+                             (logics/order-by-desc :post/timestamp))})
 
 
 (def alias-list-posts-tag-id (pc/alias-resolver :list-posts-tag/id :tag/id))
@@ -89,7 +90,8 @@
                               :post/description]}]}
   {:list-posts (-> :posts
                    database-fn
-                   (adapters/hashmap->map-list-id :post/id))})
+                   (adapters/hashmap->map-list-id :post/id)
+                   (logics/order-by-desc :post/timestamp))})
 
 (pc/defresolver paginate-posts [{:keys [ast database-fn]} _]
   {::pc/output [{:paginate/posts [:post/id
@@ -102,7 +104,7 @@
     {:paginate/posts (-> :posts
                          database-fn
                          (adapters/hashmap->map-list-id :post/id)
-                         (as-> posts (sort-by :post/timestamp posts))
+                         (logics/order-by-desc :post/timestamp)
                          (logics/pagination page page-size))}))
 
 (def resolvers [page-body-resolver
