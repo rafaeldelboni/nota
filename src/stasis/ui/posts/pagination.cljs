@@ -64,14 +64,13 @@
   [{:keys [app]}]
   (comp/transact! app [(goto-page {:page-number 1})]))
 
-(defsc ListPaginationPosts [_this {:keys [pagination/number pagination/posts] :as props}]
+(defsc ListPaginationPosts [_this {:keys [pagination/posts] :as props}]
   {:initial-state {:pagination/number 1 :pagination/posts []}
    :query         [:pagination/number {:pagination/posts (comp/get-query ui.posts/ListPost)}
                    [df/marker-table :pagination]]
    :ident         [:pagination/by-number :pagination/number]}
   (let [status (get props [df/marker-table :pagination])]
     (dom/div
-     (dom/p "Page number " number)
      (if (df/loading? status)
        (dom/div "Loading...")
        (dom/div (mapv ui.posts/ui-list-post posts))))))
@@ -84,13 +83,21 @@
    :ident         (fn [] [:posts/by-id 1])}
   (let [{:keys [pagination/number]} current-page]
     (dom/div
-     (dom/button {:disabled (= 1 number)
-                  :onClick #(comp/transact! this [(goto-page {:page-number (dec number)})])}
-                 "Prior Page")
-     (dom/button {:disabled (not= pagination-page-max-size (count (:pagination/posts current-page)))
-                  :onClick #(comp/transact! this [(goto-page {:page-number (inc number)})])}
-                 "Next Page")
-     (ui-list-pagination-posts current-page))))
+     (ui-list-pagination-posts current-page)
+     (dom/p
+      ;(when (not= 1 number)
+        (dom/button {:classes ["button" "button-clear"]
+                     :disabled (= 1 number)
+                     :onClick #(comp/transact! this [(goto-page {:page-number (dec number)})])}
+                    "Recent posts")
+        ;)
+      ;(when (= pagination-page-max-size (count (:pagination/posts current-page)))
+        (dom/button {:classes ["button" "button-clear"]
+                     :disabled (not= pagination-page-max-size (count (:pagination/posts current-page)))
+                     :onClick #(comp/transact! this [(goto-page {:page-number (inc number)})])}
+                    "Older posts"
+                    ;)
+        )))))
 
 (def ui-large-list-posts (comp/factory LargeListPosts))
 
@@ -105,5 +112,5 @@
                      #(do
                         (initialize {:app app})
                         (dr/target-ready! app [:component/id :list-posts]))))}
-  (dom/div
+  (dom/section
    (ui-large-list-posts list)))

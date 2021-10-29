@@ -1,4 +1,4 @@
-(ns stasis.ui.pages 
+(ns stasis.ui.pages
   (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.data-fetch :as df]
             [com.fulcrologic.fulcro.dom :as dom]
@@ -6,7 +6,7 @@
             [stasis.routing :as routing]
             [stasis.ui.markdown :as markdown]))
 
-(defsc Page [_this {:page/keys [id path body]}]
+(defsc Page [_this {:page/keys [body]}]
   {:query           [:ui/modified?
                      :page/id
                      :page/name
@@ -21,11 +21,9 @@
                                                      :post-mutation-params
                                                      {:target [:page/id id]}})))}
   (if body
-    (dom/div
-     (dom/h2 (str "Id " id))
-     (dom/h2 (str "Path " path))
+    (dom/section
      (markdown/render {:body body}))
-    (dom/div "loading")))
+    (dom/section "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]
   {:query [:page/id
