@@ -1,11 +1,14 @@
 {:deps     {:aliases [:dev :tests]}
  :dev-http {8000 "classpath:public"}
- :builds   {:tests       {:target           :browser-test
+ :builds   {
+            :tests       {:target           :browser-test
+                          :build-hooks      [(stasis.application.build/load-env)]
                           :test-dir         "resources/public/js/test"
                           :ns-regexp        "-test$"
                           :devtools         {:http-port          8022
                                              :http-root          "resources/public/js/test"}}
             :ci-tests   {:target           :karma
+                         :build-hooks      [(stasis.application.build/load-env)]
                          :compiler-options {:static-fns      false
                                             :external-config {:guardrails {:throw? true}}}
                          :output-to        "target/ci.js"
