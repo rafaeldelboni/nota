@@ -1,7 +1,7 @@
 (ns stasis.routing
   (:require [clojure.string :as str]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
-            [stasis.application.data :as app-data]
+            [stasis.application.env :as env]
             [stasis.routing.pushy :as pushy]))
 
 (defonce history (atom nil))
@@ -9,14 +9,14 @@
 (defn route-to!
   "Change routes to the given route-string"
   [route-string]
-  (let [app-prefix (:app-prefix app-data/config)]
+  (let [app-prefix (:app-prefix env/config)]
     (pushy/set-token! @history (->> route-string
                                   (into [app-prefix])
                                   (remove str/blank?)
                                   (str/join "/")))))
 
 (defn create-history [app]
-  (let [{:keys [app-prefix path-prefix default-route]} app-data/config]
+  (let [{:keys [app-prefix path-prefix default-route]} env/config]
     (pushy/pushy (fn [path]
                  (let [real-path (if (= (first path) "/")
                                    path

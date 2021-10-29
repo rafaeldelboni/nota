@@ -6,7 +6,6 @@
             [shadow.resource :as rc]))
 
 (def data (reader/read-string (rc/inline "../../data.edn")))
-(def config (reader/read-string (rc/inline "../../config.edn")))
 
 (defn database-fn
   ([table]
