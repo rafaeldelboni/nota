@@ -40,7 +40,9 @@
     (dom/div
      (dom/hr)
      (dom/span "© 2021 built using ")
-     (dom/a {:href "https://github.com/rafaeldelboni/stasis"} "<Stasis>")))))
+     (dom/a {:href "https://github.com/rafaeldelboni/stasis"} "stasis")
+     (dom/span "with ❤ by ")
+     (dom/a {:href "https://github.com/rafaeldelboni"} "@rafaeldelboni")))))
 
 (def footer (comp/factory Footer))
 

@@ -85,19 +85,16 @@
     (dom/div
      (ui-list-pagination-posts current-page)
      (dom/p
-      ;(when (not= 1 number)
+      (when (not= 1 number)
         (dom/button {:classes ["button" "button-clear"]
                      :disabled (= 1 number)
                      :onClick #(comp/transact! this [(goto-page {:page-number (dec number)})])}
-                    "Recent posts")
-        ;)
-      ;(when (= pagination-page-max-size (count (:pagination/posts current-page)))
+                    "Recent posts"))
+      (when (= pagination-page-max-size (count (:pagination/posts current-page)))
         (dom/button {:classes ["button" "button-clear"]
                      :disabled (not= pagination-page-max-size (count (:pagination/posts current-page)))
                      :onClick #(comp/transact! this [(goto-page {:page-number (inc number)})])}
-                    "Older posts"
-                    ;)
-        )))))
+                    "Older posts"))))))
 
 (def ui-large-list-posts (comp/factory LargeListPosts))
 
