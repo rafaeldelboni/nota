@@ -17,7 +17,12 @@ npm install
 ```
 
 ## Set configurations
-Set the [`src/config.edn`](https://github.com/rafaeldelboni/stasis/blob/main/src/config.edn) with your keys or the corresponding enviroment variables.  
+Set the [`resources/config.edn`](https://github.com/rafaeldelboni/stasis/blob/main/resources/config.edn) with your keys or the corresponding enviroment variables.
+The config is generated using shadow-cljs hook, macros and [juxt/aero](https://github.com/juxt/aero) under the hood, check it's documentation for more information on how to use.  
+
+_[Aero's #profile](https://github.com/juxt/aero#profile)_ reader conditionals available:
+ - `:dev` for when running locally dev builds
+ - `:release` for compiled final builds.
 
 ## Commands
 
