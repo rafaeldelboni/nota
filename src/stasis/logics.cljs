@@ -1,4 +1,4 @@
-(ns stasis.logics 
+(ns stasis.logics
   (:require [clojure.string :as string]))
 
 (defn assoc-if-exists
@@ -26,3 +26,8 @@
   (or (get tags id)
       {:tag/id id
        :tag/name (string/capitalize id)}))
+
+(defn order-by-desc
+  [list-to-order by-key]
+  (-> (comp - by-key)
+      (sort-by list-to-order)))

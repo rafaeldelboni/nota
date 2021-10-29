@@ -171,6 +171,13 @@ Delete:
 Are you sure? (y/N):
 ```
 
+# Acknowledgment
+  - [fulcro](https://github.com/fulcrologic/fulcro): A library for development of single-page full-stack web applications in clj/cljs
+  - [pathom](https://github.com/wilkerlucio/pathom): Pathom is a Clojure(script) engine for processing EQL requests
+  - [shadow-cljs](https://github.com/thheller/shadow-cljs): ClojureScript compilation made easy
+  - [babashka](https://github.com/babashka/babashka): Native, fast starting Clojure interpreter for scripting
+  - [sakura](https://github.com/oxalorg/sakura): Minimal classless css framework / theme
+
 # License
 This is free and unencumbered software released into the public domain.  
 For more information, please refer to <http://unlicense.org>

@@ -14,11 +14,12 @@
    :query [:tag/id
            :tag/name]}
   (dom/a {:onClick #(routing/route-to! (dr/path-to ListPostByTag id))}
-         (dom/h5 (:tag/name tag))))
+         (dom/span :.post-subtitle
+                   (str "[" (:tag/name tag) "]"))))
 
 (def link-tags (comp/factory LinkTags {:keyfn :tag/id}))
 
-(defsc Post [_this {:post/keys [id path body tags]}]
+(defsc Post [_this {:post/keys [body tags]}]
   {:query           [:ui/modified?
                      :post/id
                      :post/name
@@ -34,10 +35,9 @@
                                                      :post-mutation-params
                                                      {:target [:post/id id]}})))}
   (if body
-    (dom/div
-     (dom/h2 (str "Id " id))
-     (dom/h2 (str "Path " path))
-     (map link-tags tags)
+    (dom/section
+     (dom/div :.inline
+            (map link-tags tags))
      (ui.markdown/render {:body body}))
     (dom/div "loading")))
 
@@ -48,10 +48,13 @@
            :post/description
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
-  (dom/div
+  (dom/section
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
-          (dom/h1 name))
-   (dom/p (adapters/timestamp->utc-string timestamp "mmm dd, yyyy"))
+          (dom/p :.inline
+                 (dom/span :.post-title
+                           name)
+                 (dom/span :.post-subtitle
+                           (adapters/timestamp->utc-string timestamp "mmm dd, yyyy"))))
    (dom/p description)))
 
 (def ui-list-post (comp/factory ListPost {:keyfn :post/id}))
@@ -68,6 +71,6 @@
                                                   {:post-mutation `dr/target-ready
                                                    :post-mutation-params
                                                    {:target [:list-posts-tag/id id]}})))}
-  (dom/div
-   (dom/h1 (:tag/name props))
+  (dom/section
+   (dom/h5 (str "[" (:tag/name props) "]"))
    (mapv ui-list-post posts)))
