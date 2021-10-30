@@ -2,22 +2,22 @@
  :dev-http {8000 "classpath:public"}
  :builds   {
             :tests       {:target           :browser-test
-                          :build-hooks      [(stasis.application.build/load-env)]
+                          :build-hooks      [(nota.application.build/load-env)]
                           :test-dir         "resources/public/js/test"
                           :ns-regexp        "-test$"
                           :devtools         {:http-port          8022
                                              :http-root          "resources/public/js/test"}}
             :ci-tests   {:target           :karma
-                         :build-hooks      [(stasis.application.build/load-env)]
+                         :build-hooks      [(nota.application.build/load-env)]
                          :compiler-options {:static-fns      false
                                             :external-config {:guardrails {:throw? true}}}
                          :output-to        "target/ci.js"
                          :ns-regexp        "-test$"}
             :main {:target     :browser
-                   :build-hooks [(stasis.application.build/load-env)]
-                   :output-dir "resources/public/js/stasis"
-                   :asset-path "/js/stasis"
-                   :modules    {:main {:init-fn stasis.application/init
-                                       :entries [stasis.application]}}
-                   :devtools   {:after-load stasis.application/refresh
+                   :build-hooks [(nota.application.build/load-env)]
+                   :output-dir "resources/public/js/nota"
+                   :asset-path "/js/nota"
+                   :modules    {:main {:init-fn nota.application/init
+                                       :entries [nota.application]}}
+                   :devtools   {:after-load nota.application/refresh
                                 :preloads   [com.fulcrologic.fulcro.inspect.preload]}}}}

@@ -3,11 +3,11 @@
  :deps {babashka/fs {:mvn/version "0.1.0"}
         borkdude/rewrite-edn {:mvn/version "0.1.0"}
         dev.nubank/docopt {:mvn/version "0.6.1-fix7"}}
- :tasks {new:post stasis.main/new-post
-         del:post stasis.main/del-post
-         new:page stasis.main/new-page
-         del:page stasis.main/del-page
-         new:tag stasis.main/new-tag
-         del:tag stasis.main/del-tag
-         tests (do (load-file "scripts/stasis/tests.clj")
-                   (clojure.test/run-tests 'stasis.tests))}}
+ :tasks {new:post nota.main/new-post
+         del:post nota.main/del-post
+         new:page nota.main/new-page
+         del:page nota.main/del-page
+         new:tag nota.main/new-tag
+         del:tag nota.main/del-tag
+         tests (do (load-file "scripts/nota/tests.clj")
+                   (clojure.test/run-tests 'nota.tests))}}
