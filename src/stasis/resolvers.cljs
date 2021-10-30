@@ -25,16 +25,6 @@
       (get id)
       (logics/assoc-if-exists :page/id id)))
 
-(pc/defresolver author-resolver [{:keys [database-fn]} {:author/keys [id]}]
-  {::pc/input  #{:author/id}
-   ::pc/output [:author/id
-                :author/name
-                :author/email]}
-  (-> :authors
-      database-fn
-      (get id)
-      (logics/assoc-if-exists :author/id id)))
-
 (pc/defresolver tag-resolver [{:keys [database-fn]} {:tag/keys [id]}]
   {::pc/input  #{:tag/id}
    ::pc/output [:tag/id
@@ -67,8 +57,7 @@
                 :post/name
                 :post/path
                 :post/description
-                :post/tags
-                :author/id]}
+                :post/tags]}
   (-> :posts
       database-fn
       (get id)
@@ -110,7 +99,6 @@
 (def resolvers [page-body-resolver
                 post-body-resolver
                 page-resolver
-                author-resolver
                 tag-resolver
                 list-posts-tag-resolver
                 alias-list-posts-tag-id

@@ -109,5 +109,5 @@
                      #(do
                         (initialize {:app app})
                         (dr/target-ready! app [:component/id :list-posts]))))}
-  (dom/section
+  (dom/div
    (ui-large-list-posts list)))

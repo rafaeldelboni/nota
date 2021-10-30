@@ -35,13 +35,10 @@
 (defsc Footer [_this _]
   {}
   (dom/footer
-   (dom/section
-    (dom/div
-     (dom/hr)
-     (dom/span "© 2021 built using ")
-     (dom/a {:href "https://github.com/rafaeldelboni/stasis"} "stasis")
-     (dom/span "with ❤ by ")
-     (dom/a {:href "https://github.com/rafaeldelboni"} "@rafaeldelboni")))))
+   (dom/div
+    (dom/hr)
+    (dom/span "© 2021 built using ")
+    (dom/a {:href "https://github.com/rafaeldelboni/stasis"} "stasis"))))
 
 (def footer (comp/factory Footer))
 
@@ -50,7 +47,8 @@
   {:query         [{:list-pages (comp/get-query ui.pages/ListPage)}
                    {:root/router (comp/get-query TopRouter)}]
    :initial-state {:root/router {}}}
-  (dom/div :.container
-           (header {:list-pages list-pages})
-           (ui-top-router router)
-           (footer)))
+  (dom/div
+   (header {:list-pages list-pages})
+   (dom/section
+     (ui-top-router router))
+   (footer)))

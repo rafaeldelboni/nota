@@ -21,9 +21,9 @@
                                                      :post-mutation-params
                                                      {:target [:page/id id]}})))}
   (if body
-    (dom/section
+    (dom/div
      (markdown/render {:body body}))
-    (dom/section "loading")))
+    (dom/div "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]
   {:query [:page/id

@@ -35,7 +35,7 @@
                                                      :post-mutation-params
                                                      {:target [:post/id id]}})))}
   (if body
-    (dom/section
+    (dom/div
      (dom/div :.inline
             (map link-tags tags))
      (ui.markdown/render {:body body}))
@@ -48,7 +48,7 @@
            :post/description
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
-  (dom/section
+  (dom/div
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
           (dom/p :.inline
                  (dom/span :.post-title
@@ -71,6 +71,6 @@
                                                   {:post-mutation `dr/target-ready
                                                    :post-mutation-params
                                                    {:target [:list-posts-tag/id id]}})))}
-  (dom/section
+  (dom/div
    (dom/h5 (str "[" (:tag/name props) "]"))
    (mapv ui-list-post posts)))
