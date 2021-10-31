@@ -30,9 +30,11 @@
    :post/tags (-> tags (string/split #" ") set)})
 
 (defn args->new-page
-  [{:keys [new-name]} resource-path]
+  [{:keys [new-name hidden]
+    :or {hidden false}} resource-path]
   {:page/name new-name
-   :page/path (string/join "/" (drop 2 resource-path))})
+   :page/path (string/join "/" (drop 2 resource-path))
+   :page/hidden hidden})
 
 (defn args->new-tag
   [{:keys [new-name]}]
@@ -201,9 +203,10 @@ Usage:
   new:page -h | --help
 
 Options:
-  -h --help          Show help.
-  -n --name <name>   page name.
-  -s --slug <slug>   page slug override. [Optional]
+  -h --help         Show help.
+  -n --name <name>  page name.
+  -s --slug <slug>  page slug override. [Optional]
+  --hide            page isn't listed, but still accessible via slug. [Optional]
 ")
 
 (defn new-page
@@ -216,9 +219,11 @@ Options:
        (println new-page-doc)
        (System/exit 0))
      (let [new-name (or (arg-map "<name>") (arg-map "--name"))
-           slug     (arg-map "--slug")]
+           slug     (arg-map "--slug")
+           hidden   (arg-map "--hide")]
        (new-item-action {:new-name new-name
-                         :slug slug}
+                         :slug slug
+                         :hidden hidden}
                         :pages)))))
 
 (def del-page-doc "Nota: New page

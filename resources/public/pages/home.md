@@ -132,6 +132,8 @@ New:
 Create? (Y/n):
 ```
 
+> Is possible to create "hidden" pages adding `--hide` to the command, this will filter the page from pages list resolver, but anyone will stil be able to access it via [url/slug](secret).
+
 ### Delete Page
 ```bash
 bb del:page about

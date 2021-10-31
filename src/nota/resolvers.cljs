@@ -70,6 +70,7 @@
                               :page/path]}]}
   {:list-pages (-> :pages
                    database-fn
+                   (logics/filter-by (comp not :page/hidden))
                    (adapters/hashmap->map-list-id :page/id))})
 
 (pc/defresolver list-posts-resolver [{:keys [database-fn]} _]

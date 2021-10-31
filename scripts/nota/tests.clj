@@ -23,8 +23,21 @@
 
 (deftest args-new-page-test
   (is (= {:page/name "A Link To The Past"
-          :page/path "games"}
+          :page/path "games"
+          :page/hidden false}
          (main/args->new-page {:new-name "A Link To The Past"}
+                              ["res" "pub" "games"])))
+  (is (= {:page/name "A Link To The Past"
+          :page/path "games"
+          :page/hidden false}
+         (main/args->new-page {:new-name "A Link To The Past"
+                               :hidden false}
+                              ["res" "pub" "games"])))
+  (is (= {:page/name "A Link To The Past The Hidden Bootleg"
+          :page/path "games"
+          :page/hidden true}
+         (main/args->new-page {:new-name "A Link To The Past The Hidden Bootleg"
+                               :hidden true}
                               ["res" "pub" "games"]))))
 
 (deftest args-new-tag-test

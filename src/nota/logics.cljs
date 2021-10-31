@@ -21,6 +21,13 @@
           (contains? (tag-key val) tag-id)))
        (into {})))
 
+(defn filter-by
+  [list-to-filter by-fn]
+  (->> list-to-filter
+       (filter (fn [[_key val]]
+                 (by-fn val)))
+       (into {})))
+
 (defn get-tag-override
   [tags id]
   (or (get tags id)
