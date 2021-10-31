@@ -36,6 +36,16 @@
     (is (= (logics/filter-by-tag fixture :post/tags :c)
            {"post-3" {:post/name "Post 3" :post/tags #{:a :b :c}}}))))
 
+(deftest filter-by-test
+  (let [fixture {"page-1" {:page/name "page 1"}
+                 "page-2" {:page/name "page 2" :page/hidden false}
+                 "page-3" {:page/name "page 3" :page/hidden true}}]
+    (is (= (logics/filter-by fixture :page/hidden)
+           {"page-3" {:page/name "page 3" :page/hidden true}}))
+    (is (= (logics/filter-by fixture (comp not :page/hidden))
+           {"page-1" {:page/name "page 1"}
+            "page-2" {:page/name "page 2" :page/hidden false}}))))
+
 (deftest order-by-desc-test
   (let [fixture [{:post/name "Post 1" :post/timestamp 1}
                  {:post/name "Post 2" :post/timestamp 2}
