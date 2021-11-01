@@ -141,26 +141,26 @@ input, textarea {
 textarea {
   width: 100%; }
 
-.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
-  display: inline-block;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: #ffffff;
-  color: #222222;
-  border-radius: 1px;
-  border: 1px solid #ffffff;
-  cursor: pointer;
-  box-sizing: border-box; }
-  .button[disabled], button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled] {
-    cursor: default;
-    opacity: .5; }
-  .button:focus:enabled, .button:hover:enabled, button:focus:enabled, button:hover:enabled, input[type="submit"]:focus:enabled, input[type="submit"]:hover:enabled, input[type="reset"]:focus:enabled, input[type="reset"]:hover:enabled, input[type="button"]:focus:enabled, input[type="button"]:hover:enabled {
-    background-color: #c9c9c9;
-    border-color: #c9c9c9;
-    color: #222222;
-    outline: 0; }
+/* .button, button, input[type="submit"], input[type="reset"], input[type="button"] { */
+/*   display: inline-block; */
+/*   padding: 5px 10px; */
+/*   text-align: center; */
+/*   text-decoration: none; */
+/*   white-space: nowrap; */
+/*   background-color: #ffffff; */
+/*   color: #222222; */
+/*   border-radius: 1px; */
+/*   border: 1px solid #ffffff; */
+/*   cursor: pointer; */
+/*   box-sizing: border-box; } */
+/*   .button[disabled], button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled] { */
+/*     cursor: default; */
+/*     opacity: .5; } */
+/*   .button:focus:enabled, .button:hover:enabled, button:focus:enabled, button:hover:enabled, input[type="submit"]:focus:enabled, input[type="submit"]:hover:enabled, input[type="reset"]:focus:enabled, input[type="reset"]:hover:enabled, input[type="button"]:focus:enabled, input[type="button"]:hover:enabled { */
+/*     background-color: #c9c9c9; */
+/*     border-color: #c9c9c9; */
+/*     color: #222222; */
+/*     outline: 0; } */
 
 textarea, select, input {
   color: #c9c9c9;

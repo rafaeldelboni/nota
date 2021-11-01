@@ -1,0 +1,79 @@
+:root {
+	--gray: gainsboro;
+	--accent-color: aquamarine;
+
+	--title-line-height: 1.6;
+}
+
+.nota-nav {	
+	display: flex;
+	width: 100%;
+}
+
+.nota-btn {
+	color: white;
+	border: 1px solid white;
+	background-color: transparent;
+	transition: all 0.2s ease;
+	padding: 0.25rem 0.8rem;
+	margin-inline-end: 0.8rem;
+	cursor: pointer;
+	font-size: 2.1rem;
+}
+
+.nota-btn:last-child {
+	margin-inline-end: 0;
+}
+
+.nota-btn:hover {
+	border: 1px solid black;
+	background-color: white;
+	color: black;
+}
+
+.nota-btn--source {
+	margin-inline-start: auto;
+}
+
+h1, h2 {
+	font-weight: 500;
+	font-size: 4.5rem;
+	color: var(--gray);
+	line-height: var(--title-line-height);
+	margin: 0;
+}
+
+h2 {
+	font-size: 3.2rem;
+	margin: 0 0 1.6rem 0;
+}
+
+h3 {
+	font-size: 2.1rem;
+	margin: 0 0 0.8rem 0;
+}
+
+p {
+	margin: 0;
+	font-weight: 300;
+	margin-block-end: 3.2rem;
+}
+
+ul {
+	margin: 0;
+	list-style-position: outside;
+	margin-block-end: 3.2rem;
+	padding: 0;
+}
+
+a {
+	color: white;
+	border-bottom: 2px solid white;
+	transition: all 0.2s ease;
+}
+
+a:hover {
+	border-bottom: 2px solid var(--accent-color);
+	color: var(--accent-color);
+	text-decoration: none;
+}

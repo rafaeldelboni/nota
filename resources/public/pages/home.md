@@ -1,8 +1,8 @@
-# Stasis
-Static Markdown Blog/Site using Fulcro &amp; Pathom with no backend
+# nota
+Nota Markdown Blog/Site using Fulcro &amp; Pathom with no backend
 
 # Prerequisites
-Things you need installed to use this repository
+Things you need installed to use this repository:
 
 - [nodejs](https://nodejs.dev/download)
 - [clojure](https://clojure.org/guides/getting_started)

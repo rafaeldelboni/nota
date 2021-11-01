@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Static Markdown Blog/Site using Fulcro & Pathom with no backend",
   "scripts": {
-    "css:watch": "sass --watch src/css/sakura.css:resources/public/css/sakura.min.css src/css/stasis.css:resources/public/css/stasis.min.css",
-    "css:release": "sass src/css/sakura.css:resources/public/css/sakura.min.css src/css/stasis.css:resources/public/css/stasis.min.css --style=compressed",
+    "css:watch": "sass --watch src/css/sakura.css:resources/public/css/sakura.min.css src/css/stasis.css:resources/public/css/stasis.min.css src/css/nota.css:resources/public/css/nota.min.css",
+    "css:release": "sass src/css/sakura.css:resources/public/css/sakura.min.css src/css/stasis.css:resources/public/css/stasis.min.css src/css/nota.css:resources/public/css/nota.min.css --style=compressed",
     "js:watch": "shadow-cljs watch main",
     "js:release": "shadow-cljs release main",
     "ci-tests": "shadow-cljs compile ci-tests && karma start --single-run",

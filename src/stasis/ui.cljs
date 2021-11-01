@@ -22,12 +22,14 @@
 (defsc Header [_this {:keys [list-pages]}]
   {}
   (dom/header
-   (dom/nav
+   (dom/nav {:class "nota-nav"}
     (map ui.pages/ui-list-page list-pages)
-    (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))}
+    (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))
+                 :class "nota-btn"}
                 "Blog")
     (dom/button :.float-right
-                {:onClick #(js/window.open "https://github.com/rafaeldelboni/stasis" "_blank")}
+                {:onClick #(js/window.open "https://github.com/rafaeldelboni/stasis" "_blank")
+                 :class "nota-btn nota-btn--source"}
                 "Source"))))
 
 (def header (comp/factory Header))
@@ -39,7 +41,7 @@
     (dom/div
      (dom/hr)
      (dom/span "© 2021 built using ")
-     (dom/a {:href "https://github.com/rafaeldelboni/stasis"} "stasis")
+     (dom/a {:href "https://github.com/rafaeldelboni/nota"} "nota")
      (dom/span "with ❤ by ")
      (dom/a {:href "https://github.com/rafaeldelboni"} "@rafaeldelboni")))))
 

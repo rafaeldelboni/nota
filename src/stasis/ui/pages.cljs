@@ -22,13 +22,15 @@
                                                      {:target [:page/id id]}})))}
   (if body
     (dom/section
-     (markdown/render {:body body}))
+     (dom/article
+       (markdown/render {:body body})))
     (dom/section "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]
   {:query [:page/id
            :page/name]
    :ident (fn [] [:page/id (:page/id props)])}
-  (dom/button {:onClick #(routing/route-to! (dr/path-to Page id))} name))
+  (dom/button {:onClick #(routing/route-to! (dr/path-to Page id))
+               :class "nota-btn"} name))
 
 (def ui-list-page (comp/factory ListPage {:keyfn :page/id}))
