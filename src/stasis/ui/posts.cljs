@@ -48,13 +48,13 @@
            :post/description
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
-  (dom/section
+  (dom/section {:class "nota-posts"}
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
           (dom/p :.inline
                  (dom/span :.post-title
                            name)
                  (dom/span :.post-subtitle
-                           (adapters/timestamp->utc-string timestamp "mmm dd, yyyy"))))
+                           (adapters/timestamp->utc-string timestamp " mmm dd, yyyy"))))
    (dom/p description)))
 
 (def ui-list-post (comp/factory ListPost {:keyfn :post/id}))
