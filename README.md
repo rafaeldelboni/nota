@@ -1,4 +1,6 @@
-# Stasis
+# Nota
+> nota : mark, token, note, sign.  
+
 Static Markdown Blog/Site using Fulcro &amp; Pathom with no backend
 
 # Prerequisites
@@ -9,7 +11,7 @@ Things you need installed to use this repository
 - [babashka](https://github.com/babashka/babashka#installation)
 
 # Developers
-Commands and alias for tooling while developing stasis.
+Commands and alias for tooling while developing nota.
 
 ## Install dependencies
 ```bash
@@ -17,7 +19,7 @@ npm install
 ```
 
 ## Set configurations
-Set the [`resources/config.edn`](https://github.com/rafaeldelboni/stasis/blob/main/resources/config.edn) with your keys or the corresponding enviroment variables.
+Set the [`resources/config.edn`](https://github.com/rafaeldelboni/nota/blob/main/resources/config.edn) with your keys or the corresponding enviroment variables.
 The config is generated using shadow-cljs hook, macros and [juxt/aero](https://github.com/juxt/aero) under the hood, check it's documentation for more information on how to use.  
 
 _[Aero's #profile](https://github.com/juxt/aero#profile)_ reader conditionals available:
@@ -131,6 +133,7 @@ New:
 
 Create? (Y/n):
 ```
+> Is possible to create "hidden" pages adding `--hide` to the command, this will filter the page from pages list resolver, but anyone will stil be able to access it via url/slug.
 
 ### Delete Page
 ```bash
@@ -146,7 +149,7 @@ Are you sure? (y/N):
 This will **delete** the file `resources/public/posts/hello-world.md` and remove the entry in the database `src/data.edn`.
 
 ## Tags
-Tags aren't required to stasis work, but you can override it's default behaviour (capitalize tag) to customize the name that will be shown.
+Tags aren't required to nota work, but you can override it's default behaviour (capitalize tag) to customize the name that will be shown.
 
 ### New Tags
 ```bash

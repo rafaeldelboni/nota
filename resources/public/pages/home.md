@@ -1,5 +1,5 @@
-# nota
-Nota Markdown Blog/Site using Fulcro &amp; Pathom with no backend
+# Nota
+Static Markdown Blog/Site using Fulcro &amp; Pathom with no backend
 
 # Prerequisites
 Things you need installed to use this repository:
@@ -131,6 +131,8 @@ New:
 
 Create? (Y/n):
 ```
+
+> Is possible to create "hidden" pages adding `--hide` to the command, this will filter the page from pages list resolver, but anyone will stil be able to access it via [url/slug](#/hidden-page)
 
 ### Delete Page
 ```bash

@@ -1,5 +1,5 @@
 {
-  "name": "stasis",
+  "name": "nota",
   "version": "1.0.0",
   "description": "Static Markdown Blog/Site using Fulcro & Pathom with no backend",
   "scripts": {

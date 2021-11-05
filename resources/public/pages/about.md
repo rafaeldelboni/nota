@@ -1,4 +1,6 @@
 # About
+> nota : mark, token, note, sign.
+
 ## Acknowledgment
 Great tools used to build this:
 
