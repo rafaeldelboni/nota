@@ -1,12 +1,12 @@
-(ns stasis.ui
+(ns nota.ui
   (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr :refer [defrouter]]
             [com.fulcrologic.fulcro.react.hooks :as hooks]
-            [stasis.ui.pages :as ui.pages]
-            [stasis.ui.posts :as ui.posts]
-            [stasis.ui.posts.pagination :as ui.posts.pagination]
-            [stasis.routing :as routing]))
+            [nota.ui.pages :as ui.pages]
+            [nota.ui.posts :as ui.posts]
+            [nota.ui.posts.pagination :as ui.posts.pagination]
+            [nota.routing :as routing]))
 
 (defrouter TopRouter [_this {:keys [current-state]}]
   {:router-targets [ui.pages/Page
