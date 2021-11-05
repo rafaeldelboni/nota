@@ -1,52 +1,229 @@
+:root,
+:root.dark {
+	/* colors */
+	--black: rgba(0, 0, 0, 0.87);
+	--gray: gainsboro;
+	--white: whitesmoke;
+	--accent-color: #FF9B49;
+
+	--bg-color: var(--black);
+	--font-base-color: var(--white);
+	--bg-gray-color: var(--gray);
+	--title-color: var(--gray);
+
+	/* fonts */
+	--line-height: 1.6;
+
+	/* sizes */
+	--max-width: 800px;
+}
+
+:root.light {
+	--bg-color: var(--white);
+	--font-base-color: var(--black);
+	--title-color: var(--black);
+}
+
 html {
-  font-size: 75%;
+  font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
+	height: 100%;
 }
+
 body {
-  color: #ffffff;
+  color: var(--font-base-color);
+	padding: 1.6rem;
+	box-sizing: border-box;
+	width: min(var(--max-width), 70%);
+	background-color: var(--bg-color);
+	line-height: var(--line-height);
+	transition: all 0.2s ease;
+	margin: 0 auto;
 }
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'JetBrains Mono', monospace;
-  color: #c9c9c9;
+
+.nota-nav {	
+	display: flex;
+	width: 100%;
+	margin-block-end: 3.2rem;
 }
-button {
-  overflow: visible;
-  width: auto;
-  margin: 2.5px;
+
+.nota-btn {
+	color: var(--font-base-color);
+	border: 1px solid var(--font-base-color);;
+	background-color: transparent;
+	transition: all 0.2s ease;
+	padding: 0.25rem 0.8rem;
+	margin-inline-end: 0.8rem;
+	cursor: pointer;
+	font-size: 2.1rem;
 }
+
+.nota-btn:last-child {
+	margin-inline-end: 0;
+}
+
+.nota-btn:hover {
+	border: 1px solid var(--accent-color);
+	background-color: var(--accent-color);
+	color: var(--white);
+}
+
+.nota-btn--source {
+	margin-inline-start: auto;
+}
+
+.nota-btn--theme {
+	border: none;
+	border-bottom: 2px solid transparent;
+	margin: 0;
+	padding: 0;
+}
+
+.nota-btn--theme:hover {
+	border: none;
+	border-bottom: 2px solid var(--accent-color);
+	background-color: transparent;
+}
+
+h1, h2 {
+	font-family: "Poppins";
+	font-weight: 500;
+	font-size: 4.5rem;
+	color: var(--title-color);
+	margin: 0;
+}
+
+h2 {
+	font-size: 3.2rem;
+	margin: 1.6rem 0;
+}
+
+h3 {
+	font-size: 2.1rem;
+	margin: 0 0 0.8rem 0;
+}
+
+h4 {
+	font-size: 1.6rem;
+}
+
+h5 {
+	font-size: 1.5rem;
+}
+
+h6 {
+	font-size: 1.2rem;
+}
+
+p {
+	margin: 0;
+	font-weight: 300;
+	font-size: 2.1rem;
+	margin-block-end: 3.2rem;
+}
+
+p code {
+	padding-inline: 0.8rem;
+}
+
+ul, ol {
+	margin: 0;
+	list-style-position: outside;
+	margin-block-end: 3.2rem;
+	padding: 0;
+}
+
+ul ul {
+	list-style-position: inside;
+}
+
+ol ol { 
+	list-style-position: inside;
+}
+
 a {
-  cursor: pointer;
-  margin-right: 10px;
+	color: var(--font-base-color);
+	text-decoration: none;
+	border-bottom: 2px solid var(--font-base-color);
+	font-size: 2.1rem;
+	transition: all 0.2s ease;
+	cursor: pointer;
 }
-section {
-  margin-top: 32px;
-  margin-bottom: 25px;
+
+a:hover {
+	border-bottom: 2px solid var(--accent-color);
+	color: var(--accent-color);
+	text-decoration: none;
 }
+
+li {
+	font-size: 2.1rem;
+}
+
+pre {
+	background-color: #4a4a4a;
+	margin-block-end: 3.2rem;
+	overflow-x: auto;
+	padding: 1.6rem;
+}
+
+code {
+	font-size: 2.1rem;
+	color: var(--white);
+	background-color: #4a4a4a;
+}
+
 footer {
-  font-size: 0.7em;
+	font-size: 1.6rem;
+	margin-block-start: 3.2rem;
 }
-hr {
-  background-color: #646464;
-  border-color: #646464;
-  color: #646464;
+
+footer a {
+	font-size: 1.6rem;
 }
-.inline {
-  display: inline;
+
+blockquote {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 1em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  padding-right: 0.8em;
+  border-left: 5px solid var(--accent-color);
+  margin-bottom: 2.5rem;
+  background-color: #4a4a4a; 
 }
-.post-title {
-  font-size: 2.35em;
-  margin-right: 5px;
+
+blockquote p {
+  margin-bottom: 0;
 }
+
+blockquote p {
+	color: var(--white);
+}
+
+blockquote p a {
+	color: var(--white);
+	border-color: var(--white);
+}
+
+.nota-posts a {
+	position: relative;
+	font-family: "Poppins";
+}
+
+.nota-posts a:hover::before {
+	content: "-";
+	font-size: 2.1rem;
+	position: absolute;
+	inset-inline-start: -1.6rem;
+}
+
+.nota-posts a p {
+	margin-block-end: 0;
+}
+
 .post-subtitle {
-  font-size: 0.85em;
-}
-.float-right {
-  float: right;
-}
-@media (max-width: 320px) {
-  .float-right {
-    float: none;
-    display: block;
-    text-align: center;
-  }
+	font-family: "JetBrains Mono";
+	font-size: 1.6rem;
 }
