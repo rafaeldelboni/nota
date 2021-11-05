@@ -26,7 +26,6 @@
 (defsc Header [_this {:keys [list-pages]}]
   {:use-hooks? true}
   (let [[theme change-theme] (hooks/use-state "dark")]
-    (js/console.log theme)
     (dom/header
      (dom/nav {:class "nota-nav"}
       (map ui.pages/ui-list-page list-pages)

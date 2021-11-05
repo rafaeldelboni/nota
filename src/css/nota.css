@@ -1,7 +1,7 @@
 :root,
 :root.dark {
 	/* colors */
-	--black: black;
+	--black: rgba(0, 0, 0, 0.87);
 	--gray: gainsboro;
 	--white: whitesmoke;
 	--accent-color: #FF9B49;
@@ -37,6 +37,7 @@ body {
 	width: min(var(--max-width), 70%);
 	background-color: var(--bg-color);
 	line-height: var(--line-height);
+	transition: all 0.2s ease;
 	margin: 0 auto;
 }
 
@@ -64,7 +65,7 @@ body {
 .nota-btn:hover {
 	border: 1px solid var(--accent-color);
 	background-color: var(--accent-color);
-	color: var(--font-base-color);
+	color: var(--white);
 }
 
 .nota-btn--source {
@@ -125,11 +126,19 @@ p code {
 	padding-inline: 0.8rem;
 }
 
-ul {
+ul, ol {
 	margin: 0;
 	list-style-position: outside;
 	margin-block-end: 3.2rem;
 	padding: 0;
+}
+
+ul ul {
+	list-style-position: inside;
+}
+
+ol ol { 
+	list-style-position: inside;
 }
 
 a {
