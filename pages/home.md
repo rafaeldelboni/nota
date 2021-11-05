@@ -2,7 +2,7 @@
 Static Markdown Blog/Site using Fulcro &amp; Pathom with no backend
 
 # Prerequisites
-Things you need installed to use this repository
+Things you need installed to use this repository:
 
 - [nodejs](https://nodejs.dev/download)
 - [clojure](https://clojure.org/guides/getting_started)
@@ -27,13 +27,13 @@ _[Aero's #profile](https://github.com/juxt/aero#profile)_ reader conditionals av
 ## Commands
 
 ### Local build
-Start shadow-cljs watching and serving main in [`localhost:8000`](http://localhost:8000)
+Start shadow-cljs watching and serving main in [localhost:8000](http://localhost:8000)
 ```bash
 npm run watch
 ```
 
 ### Tests
-Start shadow-cljs watching and serving tests in [`localhost:8022`](http://localhost:8022)
+Start shadow-cljs watching and serving tests in [localhost:8022](http://localhost:8022)
 ```bash
 npm run watch:tests
 ```
