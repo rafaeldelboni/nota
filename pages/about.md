@@ -8,7 +8,7 @@ Great tools used to build this:
   - [pathom](https://github.com/wilkerlucio/pathom): Pathom is a Clojure(script) engine for processing EQL requests
   - [shadow-cljs](https://github.com/thheller/shadow-cljs): ClojureScript compilation made easy
   - [babashka](https://github.com/babashka/babashka): Native, fast starting Clojure interpreter for scripting
-  - [sakura](https://github.com/oxalorg/sakura): Minimal classless css framework / theme
+  - [flipps](https://github.com/flipps): CSS and Aesthetics
 
 ## Contributing
 If you find any dead links, misinformation or any improvements in this documents at all [Emails](https://github.com/rafaeldelboni), [PRs](https://github.com/rafaeldelboni/buildlogs/pulls) and [Issues](https://github.com/rafaeldelboni/buildlogs/issues) are highly encouraged.
