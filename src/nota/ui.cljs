@@ -20,26 +20,26 @@
 
 (def ui-top-router (comp/factory TopRouter))
 
-(defn toggleTheme [theme]
-  (set! (.. js/document -documentElement -className) theme))
+(defn toggle-theme [current-theme hook-change-theme-fn]
+  (let [toggled-theme (if (= current-theme "dark") "light" "dark")]
+    #(do (hook-change-theme-fn toggled-theme)
+         (set! (.. js/document -documentElement -className) toggled-theme))))
 
 (defsc Header [_this {:keys [list-pages]}]
   {:use-hooks? true}
   (let [[theme change-theme] (hooks/use-state "dark")]
     (dom/header
      (dom/nav {:class "nota-nav"}
-       (dom/button {:onClick #(js/window.open "https://github.com/rafaeldelboni/nota" "_blank")
-                    :class "nota-btn nota-btn--source"}
-                   "Source")
-       (dom/button {:class "nota-btn nota-btn--theme"
-                    :onClick #(do
-                                (change-theme (if (= theme "dark") "light" "dark"))
-                                (toggleTheme (if (= theme "dark") "light" "dark")))}
-                   (if (= theme "dark") "🌞" "🌚"))
-       (map ui.pages/ui-list-page list-pages)
-       (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))
-                    :class "nota-btn"}
-                   "Blog")))))
+              (dom/button {:onClick #(js/window.open "https://github.com/rafaeldelboni/nota" "_blank")
+                           :class "nota-btn nota-btn--source"}
+                          "Source")
+              (dom/button {:class "nota-btn nota-btn--theme"
+                           :onClick (toggle-theme theme change-theme)}
+                          (if (= theme "dark") "🌞" "🌚"))
+              (map ui.pages/ui-list-page list-pages)
+              (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))
+                           :class "nota-btn"}
+                          "Blog")))))
 
 (def header (comp/factory Header))
 
