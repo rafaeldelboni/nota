@@ -28,30 +28,30 @@
   (let [[theme change-theme] (hooks/use-state "dark")]
     (dom/header
      (dom/nav {:class "nota-nav"}
-      (map ui.pages/ui-list-page list-pages)
-      (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))
-                   :class "nota-btn"}
-                  "Blog")
-      (dom/button {:onClick #(js/window.open "https://github.com/rafaeldelboni/nota" "_blank")
-                   :class "nota-btn nota-btn--source"}
-                  "Source")
-      (dom/button {:class "nota-btn nota-btn--theme"
-                   :onClick #(do
-                              (change-theme (if (= theme "dark") "light" "dark")) 
-                              (toggleTheme (if (= theme "dark") "light" "dark")))} 
-                   (if (= theme "dark") "🌞" "🌚"))))))
+       (dom/button {:onClick #(js/window.open "https://github.com/rafaeldelboni/nota" "_blank")
+                    :class "nota-btn nota-btn--source"}
+                   "Source")
+       (dom/button {:class "nota-btn nota-btn--theme"
+                    :onClick #(do
+                                (change-theme (if (= theme "dark") "light" "dark"))
+                                (toggleTheme (if (= theme "dark") "light" "dark")))}
+                   (if (= theme "dark") "🌞" "🌚"))
+       (map ui.pages/ui-list-page list-pages)
+       (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))
+                    :class "nota-btn"}
+                   "Blog")))))
 
 (def header (comp/factory Header))
 
 (defsc Footer [_this _]
   {}
   (dom/footer
-    (dom/div
-      (dom/hr)
-      (dom/span "© 2021 built using ")
-      (dom/a {:href "https://github.com/rafaeldelboni/nota"} "nota")
-      (dom/span " with ❤ by ")
-      (dom/a {:href "https://github.com/rafaeldelboni"} "@rafaeldelboni"))))
+   (dom/div
+    (dom/hr)
+    (dom/span "© 2021 built using ")
+    (dom/a {:href "https://github.com/rafaeldelboni/nota"} "nota")
+    (dom/span " with ❤ by ")
+    (dom/a {:href "https://github.com/rafaeldelboni"} "@rafaeldelboni"))))
 
 (def footer (comp/factory Footer))
 
@@ -63,5 +63,5 @@
   (dom/div
    (header {:list-pages list-pages})
    (dom/section
-     (ui-top-router router))
+    (ui-top-router router))
    (footer)))
