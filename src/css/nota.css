@@ -166,17 +166,24 @@ p code {
 
 ul, ol {
   margin: 0;
+  padding: 0;
   list-style-position: outside;
   margin-block-end: 3.2rem;
-  padding: 0;
 }
 
-ul ul {
+ul ul, ol ol {
   list-style-position: inside;
 }
 
-ol ol { 
-  list-style-position: inside;
+@media (max-width: 684px) {
+  ul, ol {
+    list-style-position: inside;
+  }
+
+  ul ul, ol ol {
+    padding-left: 15px;
+    list-style-position: inside;
+  }
 }
 
 a {
