@@ -17,5 +17,6 @@ pom.xml.asc
 node_modules/
 resources/public/js
 resources/public/css
+resources/public/index.html
 target
 .shadow-cljs
