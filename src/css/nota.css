@@ -121,6 +121,7 @@ h1, h2, h3, h4, h5, h6, code {
   word-wrap: break-word;
   -ms-word-break: break-all;
   word-break: break-word;
+  margin: 1.2rem 0;
 }
 
 h1, h2 {
@@ -128,17 +129,15 @@ h1, h2 {
   font-weight: 500;
   font-size: 4.5rem;
   color: var(--title-color);
-  margin: 0;
+  margin: 2rem 0;
 }
 
 h2 {
-  font-size: 3.2rem;
-  margin: 1.6rem 0;
+  font-size: 3.2rem 0;
 }
 
 h3 {
   font-size: 2.1rem;
-  margin: 0 0 0.8rem 0;
 }
 
 h4 {
