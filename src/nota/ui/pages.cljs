@@ -31,6 +31,6 @@
            :page/name]
    :ident (fn [] [:page/id (:page/id props)])}
   (dom/button {:onClick #(routing/route-to! (dr/path-to Page id))
-               :class "nota-btn"} name))
+               :classes ["nota-btn"]} name))
 
 (def ui-list-page (comp/factory ListPage {:keyfn :page/id}))
