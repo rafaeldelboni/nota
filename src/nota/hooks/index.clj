@@ -20,17 +20,13 @@
       get-manifest-path
       read-edn!))
 
-(def entry-point-js-error-message
-  "console.debug('shadow-cljs-hooks.index: ', 'no `:entry-point` provided.')")
-
 (defn entry-point-js [{:keys [entry-point]}]
-  (if entry-point
+  (when entry-point
     (-> entry-point
         str
         (string/replace #"-" "_")
         (string/replace #"/" ".")
-        (str "();"))
-    entry-point-js-error-message))
+        (str "();"))))
 
 (defn template [main-src
                 {:keys [title links scripts lang app-mount]
