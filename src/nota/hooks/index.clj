@@ -20,17 +20,7 @@
       get-manifest-path
       read-edn!))
 
-(defn entry-point-js [{:keys [entry-point]}]
-  (when entry-point
-    (-> entry-point
-        str
-        (string/replace #"-" "_")
-        (string/replace #"/" ".")
-        (str "();"))))
-
-(defn template [main-src
-                {:keys [title links scripts lang app-mount]
-                 :as options}]
+(defn template [main-src {:keys [title links scripts lang app-mount]}]
   (html
    [:html {:lang lang}
     [:head
@@ -44,15 +34,14 @@
      [app-mount "Loading..."]
      (for [src scripts]
        [:script {:src src}])
-     [:script {:src main-src}]
-     [:script (entry-point-js options)]]]))
+     [:script {:src main-src}]]]))
 
 (defn conform-options [build-state options]
   (merge {:path      (string/replace (output-dir build-state)
                                      (re-pattern (asset-path build-state))
                                      "")
           :title     "Nota"
-          :links     [{:href "./imp/favicon.png"
+          :links     [{:href "./img/favicon.png"
                        :rel "icon"}
                       {:href "https://fonts.googleapis.com"
                        :rel "preconnect"}
@@ -77,11 +66,11 @@
 (defn hook* [build-state options {:keys [get-manifest
                                          write-html]}]
   (let [{:keys [path] :as options} (conform-options build-state options)
-        main-src (str (asset-path build-state)
-                      "/"
-                      (-> (get-manifest build-state)
-                          first
-                          :output-name))
+        main-src (format ".%s/%s"
+                         (asset-path build-state)
+                         (-> (get-manifest build-state)
+                             first
+                             :output-name))
         index-html (template main-src options)]
     (write-html path index-html)
     build-state))
