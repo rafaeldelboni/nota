@@ -19,12 +19,13 @@
 
 (def link-tags (comp/factory LinkTags {:keyfn :tag/id}))
 
-(defsc Post [_this {:post/keys [body tags]}]
+(defsc Post [_this {:post/keys [body tags timestamp]}]
   {:query           [:ui/modified?
                      :post/id
                      :post/name
                      :post/path
                      :post/body
+                     :post/timestamp
                      {:post/tags (comp/get-query LinkTags)}]
    :ident           :post/id
    :route-segment   ["post" :post/id]
@@ -38,7 +39,8 @@
     (dom/div
      (dom/div :.inline
             (map link-tags tags))
-     (ui.markdown/render {:body body}))
+     (ui.markdown/render {:body body})
+     (dom/h3 (adapters/timestamp->utc-string timestamp " mmm dd, yyyy")))
     (dom/div "loading")))
 
 (defsc ListPost [_this {:post/keys [id name timestamp description]}]
@@ -48,7 +50,7 @@
            :post/description
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
-  (dom/section {:class "nota-posts"}
+  (dom/section {:classes ["nota-posts"]}
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
           (dom/p :.inline
                  (dom/span :.post-title

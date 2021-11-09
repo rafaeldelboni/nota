@@ -180,6 +180,7 @@ Are you sure? (y/N):
   - [shadow-cljs](https://github.com/thheller/shadow-cljs): ClojureScript compilation made easy
   - [babashka](https://github.com/babashka/babashka): Native, fast starting Clojure interpreter for scripting
   - [flipps](https://github.com/flipps): CSS and Aesthetics
+  - [font-awesome](https://fontawesome.com/license): Sun and Moon SVGs
 
 # License
 This is free and unencumbered software released into the public domain.  

@@ -57,7 +57,8 @@
                 :post/name
                 :post/path
                 :post/description
-                :post/tags]}
+                :post/tags
+                :post/timestamp]}
   (-> :posts
       database-fn
       (get id)

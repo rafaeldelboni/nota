@@ -1,12 +1,13 @@
 (ns nota.ui
   (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.dom :as dom]
-            [com.fulcrologic.fulcro.routing.dynamic-routing :as dr :refer [defrouter]]
             [com.fulcrologic.fulcro.react.hooks :as hooks]
+            [com.fulcrologic.fulcro.routing.dynamic-routing :as dr :refer [defrouter]]
+            [nota.routing :as routing]
+            [nota.ui.icons :as ui.icons]
             [nota.ui.pages :as ui.pages]
             [nota.ui.posts :as ui.posts]
-            [nota.ui.posts.pagination :as ui.posts.pagination]
-            [nota.routing :as routing]))
+            [nota.ui.posts.pagination :as ui.posts.pagination]))
 
 (defrouter TopRouter [_this {:keys [current-state]}]
   {:router-targets [ui.pages/Page
@@ -29,16 +30,18 @@
   {:use-hooks? true}
   (let [[theme change-theme] (hooks/use-state "dark")]
     (dom/header
-     (dom/nav {:class "nota-nav"}
+     (dom/nav {:classes ["nota-nav"]}
               (dom/button {:onClick #(js/window.open "https://github.com/rafaeldelboni/nota" "_blank")
-                           :class "nota-btn nota-btn--source"}
+                           :classes ["nota-btn" "nota-btn--source"]}
                           "Source")
-              (dom/button {:class "nota-btn nota-btn--theme"
+              (dom/button {:classes ["nota-btn" "nota-btn--theme"]
                            :onClick (toggle-theme theme change-theme)}
-                          (if (= theme "dark") "🌞" "🌚"))
+                          (if (= theme "dark")
+                            (ui.icons/sun-icon {:width 25 :height 25})
+                            (ui.icons/moon-icon {:width 25 :height 25})))
               (map ui.pages/ui-list-page list-pages)
               (dom/button {:onClick #(routing/route-to! (dr/path-to ui.posts.pagination/PaginatedPosts "list"))
-                           :class "nota-btn"}
+                           :classes ["nota-btn"]}
                           "Blog")))))
 
 (def header (comp/factory Header))
