@@ -4,6 +4,7 @@
   --gray: gainsboro;
   --white: whitesmoke;
   --accent-color: #FF9B49;
+  --fade-bg-color: #262626;
 
   --bg-color: var(--black);
   --font-base-color: var(--white);
@@ -14,34 +15,24 @@
   --line-height: 1.6;
 
   /* sizes */
-  --max-width: 70em;
+  --max-width: 50em;
 }
 
 :root.light {
   --bg-color: var(--white);
   --font-base-color: var(--black);
   --title-color: var(--black);
+  --fade-bg-color: #ededed;
 }
 
 html {
-  font-size: 0.65rem;
   font-family: 'JetBrains Mono', monospace;
   height: 100%;
-}
-
-@media (max-width: 684px) {
-  body {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 382px) {
-  body {
-    font-size: 1.0rem;
-  }
+  font-size: 65%;
 }
 
 body {
+  font-size: 1.8rem;
   color: var(--font-base-color);
   padding: 1.6rem;
   box-sizing: border-box;
@@ -50,6 +41,160 @@ body {
   line-height: var(--line-height);
   transition: all 0.2s ease;
   margin: 0 auto;
+}
+
+@media (max-width: 684px) {
+  body {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 382px) {
+  body {
+    font-size: 2.0rem;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--title-color);
+  line-height: 1.1;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+}
+
+h1 {
+  font-size: 2.35em;
+}
+
+h2 {
+  font-size: 2.00em;
+}
+
+h3 {
+  font-size: 1.75em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+h6 {
+  font-size: 1em;
+}
+
+small, sub, sup {
+  font-size: 75%;
+}
+
+p {
+  margin: 0;
+  font-weight: 400;
+  margin-block-end: 3.0rem;
+}
+
+p code {
+  padding-inline: 0.8rem;
+}
+
+ul {
+  padding-left: 1.4em;
+  margin-top: 0px;
+  margin-bottom: 2.5rem; 
+}
+
+li {
+  margin-bottom: 0.4em;
+}
+
+a {
+  color: var(--font-base-color);
+  text-decoration: none;
+  border-bottom: 2px solid var(--font-base-color);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+a:hover {
+  border-bottom: 2px solid var(--accent-color);
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+table {
+  text-align: justify;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 0.5em;
+}
+
+table tr:nth-child(2n) {
+    background-color: var(--fade-bg-color);
+}
+
+pre {
+  background-color: #4a4a4a;
+  margin-block-end: 3.2rem;
+  overflow-x: auto;
+  padding: 1.6rem;
+}
+
+code {
+  font-size: 2.1rem;
+  color: var(--white);
+  background-color: #4a4a4a;
+  white-space: pre-wrap;
+}
+
+footer {
+  font-size: 1.6rem;
+  margin-block-start: 3.2rem;
+}
+
+footer a {
+  font-size: 1.6rem;
+}
+
+blockquote {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 1em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  padding-right: 0.8em;
+  border-left: 5px solid var(--accent-color);
+  margin-bottom: 2.5rem;
+  background-color: #4a4a4a;
+}
+
+blockquote p {
+  margin-bottom: 0;
+}
+
+blockquote p {
+  color: var(--white);
+}
+
+blockquote p a {
+  color: var(--white);
+  border-color: var(--white);
+}
+
+label, legend, fieldset {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600;
 }
 
 .nota-btn {
@@ -105,153 +250,6 @@ body {
   background-color: transparent;
 }
 
-@media (min-width: 767px) {
-  .nota-nav {
-    text-align: left;
-  }
-
-  .nota-btn--source {
-    display: inline;
-    margin-inline-end: 0.8rem;
-  }
-}
-
-h1, h2, h3, h4, h5, h6, code {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  -ms-word-break: break-all;
-  word-break: break-word;
-  margin: 1.2rem 0;
-}
-
-h1, h2 {
-  font-family: "Poppins";
-  font-weight: 500;
-  font-size: 4.5rem;
-  color: var(--title-color);
-  margin: 2rem 0;
-}
-
-h2 {
-  font-size: 3.2rem 0;
-}
-
-h3 {
-  font-size: 2.1rem;
-}
-
-h4 {
-  font-size: 1.6rem;
-}
-
-h5 {
-  font-size: 1.5rem;
-}
-
-h6 {
-  font-size: 1.2rem;
-}
-
-p {
-  margin: 0;
-  font-weight: 300;
-  font-size: 2.1rem;
-  margin-block-end: 3.2rem;
-}
-
-p code {
-  padding-inline: 0.8rem;
-}
-
-ul, ol {
-  margin: 0;
-  padding: 0;
-  list-style-position: outside;
-  margin-block-end: 3.2rem;
-}
-
-ul ul, ol ol {
-  list-style-position: inside;
-}
-
-@media (max-width: 684px) {
-  ul, ol {
-    list-style-position: inside;
-  }
-
-  ul ul, ol ol {
-    padding-left: 15px;
-    list-style-position: inside;
-  }
-}
-
-a {
-  color: var(--font-base-color);
-  text-decoration: none;
-  border-bottom: 2px solid var(--font-base-color);
-  font-size: 2.1rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-a:hover {
-  border-bottom: 2px solid var(--accent-color);
-  color: var(--accent-color);
-  text-decoration: none;
-}
-
-li {
-  font-size: 2.1rem;
-}
-
-pre {
-  background-color: #4a4a4a;
-  margin-block-end: 3.2rem;
-  overflow-x: auto;
-  padding: 1.6rem;
-}
-
-code {
-  font-size: 2.1rem;
-  color: var(--white);
-  background-color: #4a4a4a;
-  white-space: pre-wrap;
-}
-
-footer {
-  font-size: 1.6rem;
-  margin-block-start: 3.2rem;
-}
-
-footer a {
-  font-size: 1.6rem;
-}
-
-blockquote {
-  margin-left: 0px;
-  margin-right: 0px;
-  padding-left: 1em;
-  padding-top: 0.8em;
-  padding-bottom: 0.8em;
-  padding-right: 0.8em;
-  border-left: 5px solid var(--accent-color);
-  margin-bottom: 2.5rem;
-  background-color: #4a4a4a;
-}
-
-blockquote p {
-  margin-bottom: 0;
-}
-
-blockquote p {
-  color: var(--white);
-}
-
-blockquote p a {
-  color: var(--white);
-  border-color: var(--white);
-}
-
 .nota-posts a {
   position: relative;
   font-family: "Poppins";
@@ -268,7 +266,33 @@ blockquote p a {
   margin-block-end: 0;
 }
 
+.nota-top-align {
+  vertical-align: top;
+  margin-bottom: 0.5rem;
+}
+
+.post-title {
+  font-size: 125%;
+  font-weight: 700;
+}
+
 .post-subtitle {
   font-family: "JetBrains Mono";
   font-size: 1.6rem;
+  display: block;
+}
+
+@media (min-width: 767px) {
+  .nota-nav {
+    text-align: left;
+  }
+
+  .nota-btn--source {
+    display: inline;
+    margin-inline-end: 0.8rem;
+  }
+
+  .post-subtitle {
+    display: inline;
+  }
 }
