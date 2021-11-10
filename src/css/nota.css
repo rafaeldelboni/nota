@@ -25,6 +25,12 @@
   --fade-bg-color: #ededed;
 }
 
+::selection {
+  text-shadow: none;
+  background: var(--font-base-color);
+  color: var(--bg-color);
+}
+
 html {
   font-family: 'JetBrains Mono', monospace;
   height: 100%;
