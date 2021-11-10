@@ -177,6 +177,8 @@ Delete:
 
 Are you sure? (y/N):
 ```
+# Projects using Nota
+  - https://rafael.delboni.cc/
 
 # Acknowledgment
   - [fulcro](https://github.com/fulcrologic/fulcro): A library for development of single-page full-stack web applications in clj/cljs
