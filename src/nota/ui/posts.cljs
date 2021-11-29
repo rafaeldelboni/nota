@@ -1,6 +1,7 @@
 (ns nota.ui.posts
   (:require [com.fulcrologic.fulcro.components :as comp :refer [defsc]]
             [com.fulcrologic.fulcro.data-fetch :as df]
+            [com.fulcrologic.fulcro.react.hooks :as hooks]
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr]
             [nota.adapters :as adapters]
@@ -29,12 +30,14 @@
                      {:post/tags (comp/get-query LinkTags)}]
    :ident           :post/id
    :route-segment   ["post" :post/id]
+   :use-hooks?      true
    :will-enter      (fn [app {:post/keys [id]}]
                       (dr/route-deferred [:post/id id]
                                          #(df/load! app [:post/id id] Post
                                                     {:post-mutation `dr/target-ready
                                                      :post-mutation-params
                                                      {:target [:post/id id]}})))}
+  (hooks/use-effect #(.highlightAll js/window.hljs))
   (if body
     (dom/div
      (dom/div :.inline

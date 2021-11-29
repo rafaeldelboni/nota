@@ -53,10 +53,14 @@
                        :rel "stylesheet"}
                       {:href "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
                        :rel "stylesheet"}
+                      {:href "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css"
+                       :rel "stylesheet"}
+                      {:href "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/atelier-cave-light.min.css"
+                       :rel "stylesheet"}
                       {:href "./css/nota.min.css"
                        :rel "stylesheet"
                        :htype "text/css"}]
-          :scripts   []
+          :scripts   ["https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"]
           :lang      "en"
           :app-mount :div#app}
          options))

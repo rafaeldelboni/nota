@@ -1,15 +1,16 @@
-:root, :root.dark {
+:root {
   /* colors */
   --black: rgba(0, 0, 0, 0.87);
   --gray: gainsboro;
   --white: whitesmoke;
-  --accent-color: #FF9B49;
+  --accent-color: #8e94f2;
   --fade-bg-color: #262626;
+  --code-bg: #495057;
 
-  --bg-color: var(--black);
-  --font-base-color: var(--white);
-  --bg-gray-color: var(--gray);
-  --title-color: var(--gray);
+  --bg-color: var(--white);
+  --font-base-color: var(--black);
+  --title-color: var(--black);
+  --fade-bg-color: #ededed;
 
   /* fonts */
   --line-height: 1.6;
@@ -18,23 +19,16 @@
   --max-width: 50em;
 }
 
-:root.light {
-  --bg-color: var(--white);
-  --font-base-color: var(--black);
-  --title-color: var(--black);
-  --fade-bg-color: #ededed;
-}
-
 ::selection {
   text-shadow: none;
-  background: var(--font-base-color);
+  background: var(--accent-color);
   color: var(--bg-color);
 }
 
 html {
   font-family: 'JetBrains Mono', monospace;
   height: 100%;
-  font-size: 65%;
+  font-size: 45%;
 }
 
 body {
@@ -150,7 +144,6 @@ table tr:nth-child(2n) {
 }
 
 pre {
-  background-color: #4a4a4a;
   margin-block-end: 3.2rem;
   overflow-x: auto;
   padding: 1.6rem;
@@ -159,7 +152,7 @@ pre {
 code {
   font-size: 2.1rem;
   color: var(--white);
-  background-color: #4a4a4a;
+  background-color: var(--code-bg);
   white-space: pre-wrap;
 }
 
@@ -181,7 +174,7 @@ blockquote {
   padding-right: 0.8em;
   border-left: 5px solid var(--accent-color);
   margin-bottom: 2.5rem;
-  background-color: #4a4a4a;
+  background-color: var(--code-bg);
 }
 
 blockquote p {
@@ -201,6 +194,10 @@ label, legend, fieldset {
   display: block;
   margin-bottom: .5rem;
   font-weight: 600;
+}
+
+.nota-loading {
+  min-height: 100vh;
 }
 
 .nota-btn {
