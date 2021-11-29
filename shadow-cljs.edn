@@ -1,0 +1,27 @@
+{:deps     {:aliases [:dev :tests]}
+ :dev-http {8000 "classpath:public"}
+ :builds   {:tests       {:target           :browser-test
+                          :build-hooks      [(nota.hooks.build/hook)]
+                          :test-dir         "resources/public/js/test"
+                          :ns-regexp        "-test$"
+                          :devtools         {:http-port          8022
+                                             :http-root          "resources/public/js/test"}}
+            :ci-tests   {:target           :karma
+                         :build-hooks      [(nota.hooks.build/hook)]
+                         :compiler-options {:static-fns      false
+                                            :external-config {:guardrails {:throw? true}}}
+                         :output-to        "target/ci.js"
+                         :ns-regexp        "-test$"}
+            :main {:target     :browser
+                   :build-hooks [(nota.hooks.build/hook)
+                                 (nota.hooks.index/hook)]
+
+                   :release {:module-hash-names true
+                             :build-hooks       [(nota.hooks.build/hook)
+                                                 (nota.hooks.index/hook)]}
+                   :output-dir "resources/public/js/nota"
+                   :asset-path "/js/nota"
+                   :modules    {:main {:init-fn nota.application/init
+                                       :entries [nota.application]}}
+                   :devtools   {:after-load nota.application/refresh
+                                :preloads   [com.fulcrologic.fulcro.inspect.preload]}}}}

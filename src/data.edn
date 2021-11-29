@@ -1,0 +1,8 @@
+{:pages {"home" {:page/name "Home", :page/path "pages/home.md"}
+         "about" {:page/name "About", :page/path "pages/about.md"}
+         "hidden-page" {:page/name "Secret", :page/path "pages/hidden-page.md", :page/hidden true}}
+
+ :posts {"hello-world" {:post/name "Hello World", :post/description "Such hello, much world", :post/timestamp 1635101110744, :post/path "posts/hello-world.md", :post/tags #{"markdown" "first"}}
+         "gfm-syntax" {:post/name "GFM Syntax", :post/description "All about Github Markdown Syntax", :post/timestamp 1635538866761, :post/path "posts/gfm-syntax.md", :post/tags #{"markdown"}}}
+
+ :tags {"markdown" {:tag/name "Markdown Stuff"}}}

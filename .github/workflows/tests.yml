@@ -1,0 +1,58 @@
+name: Tests
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+
+  tests:
+    strategy:
+      matrix:
+        os-version: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ${{ matrix.os-version }}
+
+    steps:
+    - name: Clone Repo
+      uses: actions/checkout@v2
+
+    - name: Prepare java
+      uses: actions/setup-java@v2.3.1
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Install clojure tools-deps
+      uses: DeLaGuardo/setup-clojure@master
+      with:
+        tools-deps: 1.10.3.986
+
+    - name: Test ${{ matrix.node-version }}
+      uses: actions/setup-node@v2.4.1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+        npm install
+        npm run ci-tests
+
+  tests-bb:
+    strategy:
+      matrix:
+        os-version: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ${{ matrix.os-version }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Babashka
+        uses: turtlequeue/setup-babashka@v1.3.0
+        with:
+          babashka-version: 0.6.2
+
+      - name: Tests BB Scripts
+        run: bb tests

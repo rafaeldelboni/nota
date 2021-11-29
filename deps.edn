@@ -1,0 +1,15 @@
+{:paths   ["src" "resources"]
+ :deps    {org.clojure/clojure    {:mvn/version "1.10.3"}
+           com.fulcrologic/fulcro {:mvn/version "3.5.6"}
+           com.wsscode/pathom     {:mvn/version "2.4.0"}
+           aero/aero              {:mvn/version "1.1.6"}}
+
+ :aliases {:tests {:extra-paths ["test"]
+                   :extra-deps  {fulcrologic/fulcro-spec {:mvn/version "3.1.12"}}}
+           :dev {:extra-paths ["src/dev"]
+                 :extra-deps  {org.clojure/clojurescript   {:mvn/version "1.10.879"}
+                               clj-commons/secretary       {:mvn/version "1.2.4"}
+                               thheller/shadow-cljs        {:mvn/version "2.15.12"}
+                               hiccup/hiccup               {:mvn/version "1.0.5"}
+                               binaryage/devtools          {:mvn/version "1.0.3"}
+                               cider/cider-nrepl           {:mvn/version "0.27.2"}}}}}

@@ -1,0 +1,31 @@
+{
+  "name": "nota",
+  "version": "1.0.0",
+  "description": "Static Markdown Blog/Site using Fulcro & Pathom with no backend",
+  "scripts": {
+    "css:watch": "sass --watch src/css/nota.css:resources/public/css/nota.min.css",
+    "css:release": "sass src/css/nota.css:resources/public/css/nota.min.css --style=compressed",
+    "js:watch": "shadow-cljs watch main",
+    "js:release": "shadow-cljs release main",
+    "ci-tests": "shadow-cljs compile ci-tests && karma start --single-run",
+    "watch:tests": "shadow-cljs watch tests",
+    "watch": "run-p -l *:watch",
+    "release": "run-s *:release"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-markdown": "^7.0.1",
+    "remark-gfm": "^3.0.0",
+    "shadow-cljs": "^2.15.11"
+  },
+  "devDependencies": {
+    "karma": "^6.3.4",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-cljs-test": "^0.1.0",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.43.4"
+  }
+}

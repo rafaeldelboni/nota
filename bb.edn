@@ -1,0 +1,13 @@
+{:paths ["scripts"]
+ :min-bb-version "0.4.0"
+ :deps {babashka/fs {:mvn/version "0.1.0"}
+        borkdude/rewrite-edn {:mvn/version "0.1.0"}
+        dev.nubank/docopt {:mvn/version "0.6.1-fix7"}}
+ :tasks {new:post nota.main/new-post
+         del:post nota.main/del-post
+         new:page nota.main/new-page
+         del:page nota.main/del-page
+         new:tag nota.main/new-tag
+         del:tag nota.main/del-tag
+         tests (do (load-file "scripts/nota/tests.clj")
+                   (clojure.test/run-tests 'nota.tests))}}
