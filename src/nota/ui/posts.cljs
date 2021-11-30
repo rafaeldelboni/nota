@@ -43,7 +43,7 @@
      (dom/div :.inline
             (map link-tags tags))
      (ui.markdown/render {:body body})
-     (dom/h3 (adapters/timestamp->utc-string timestamp " mmm dd, yyyy")))
+     (dom/h5 (adapters/timestamp->utc-string timestamp " mmm dd, yyyy")))
     (dom/div "loading")))
 
 (defsc ListPost [_this {:post/keys [id name timestamp description]}]
