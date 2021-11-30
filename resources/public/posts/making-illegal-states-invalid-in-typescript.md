@@ -7,7 +7,7 @@ One particular post that caught my attention and made me think for a little whil
 
 As I find myself referring a lot to this concept, I thought it would be nice to write down a direct translation
 to the typescript world.  
-Let's first establish our problem.
+Let's first establish our problem *(a simple todo list)*:
 
 * A task can be created with a description
 * Once a task is marked as done, one can always check out at which point in time
@@ -35,8 +35,8 @@ const task2: Todo = {
 }
 ```
 
-That type system allows the developer to create illegal states. To solve that issue, 
-a validation layer could be created, but would require more code. 
+The issue here is the type system allowing the developer to create illegal states.
+To solve that issue, a validation layer could be created, but that would require more code. 
 The type also lacks clarity, to the reader, it might not be immediately clear that *doneAt* should only
 be filled in when the field *done* is `true`.  
 

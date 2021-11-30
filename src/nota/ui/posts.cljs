@@ -53,7 +53,7 @@
            :post/description
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
-  (dom/section {:classes ["nota-posts"]}
+  (dom/div {:classes ["nota-posts"]}
    (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
           (dom/p :.inline
                  (dom/span :.post-title

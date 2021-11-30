@@ -2,6 +2,7 @@
          "about" {:page/name "About", :page/path "pages/about.md"}
          "hidden-page" {:page/name "Secret", :page/path "pages/hidden-page.md", :page/hidden true}}
 
- :posts {"making-illegal-states-invalid-in-typescript" {:post/name "Making illegal states invalid in typescript", :post/description "Better representing the different states of a type in typescript", :post/timestamp 1638219478818, :post/path "posts/making-illegal-states-invalid-in-typescript.md", :post/tags #{"programming"}}}
+ :posts {"making-illegal-states-invalid-in-typescript" {:post/name "Making illegal states invalid in typescript", :post/description "Better representing the different states of a type in typescript", :post/timestamp 1638219478818, :post/path "posts/making-illegal-states-invalid-in-typescript.md", :post/tags #{"programming"}}
+         "runtime-validation-of-illegal-typed-states" {:post/name "Runtime validation of illegal typed states", :post/description "Connecting types to runtime validation", :post/timestamp 1638284257134, :post/path "posts/runtime-validation-of-illegal-typed-states.md", :post/tags #{"programming"}}}
 
  :tags {"markdown" {:tag/name "Markdown Stuff"}}}
