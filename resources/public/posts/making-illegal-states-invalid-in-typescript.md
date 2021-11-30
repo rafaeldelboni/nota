@@ -59,10 +59,14 @@ The advantages are:
   * The code relying on the types can be more expressive in terms of which is the expected state of the task.
 
 ```typescript
-function complete(aTask: PendingTask) {
+function complete(aTodo: PendingTodo) {
   // ...
 }
 
+const todo: Todo = {
+  description: 'feed the dog',
+  done: false
+}
 complete(todo) // × compilation error
 if (!todo.done) complete(todo) // × compilation success 
 ```
