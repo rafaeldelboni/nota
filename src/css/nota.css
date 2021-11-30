@@ -196,8 +196,8 @@ label, legend, fieldset {
   font-weight: 600;
 }
 
-.nota-loading {
-  min-height: 100vh;
+section {
+  min-height: calc(100vh - 150px);
 }
 
 .nota-btn {

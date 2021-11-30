@@ -13,7 +13,7 @@
                     ui.posts/ListPostByTag
                     ui.posts.pagination/PaginatedPosts]}
   (case current-state
-    (nil :pending) (dom/div {:classes ["nota-loading"]})
+    (nil :pending) (dom/div)
     :failed (dom/div "Loading seems to have failed. Try another route.")
     (dom/div "Unknown route")))
 
