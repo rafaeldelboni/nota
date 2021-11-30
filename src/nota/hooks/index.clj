@@ -60,7 +60,8 @@
                       {:href "./css/nota.min.css"
                        :rel "stylesheet"
                        :htype "text/css"}]
-          :scripts   ["https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"]
+          :scripts   ["https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"
+                      "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/languages/clojure.min.js"]
           :lang      "en"
           :app-mount :div#app}
          options))
