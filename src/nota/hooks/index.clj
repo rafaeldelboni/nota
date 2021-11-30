@@ -42,8 +42,8 @@
   (merge {:path      (string/replace (output-dir build-state)
                                      (re-pattern (asset-path build-state))
                                      "")
-          :title     "Nota"
-          :links     [{:href "./img/favicon.png"
+          :title     "vloth"
+          :links     [{:href "./img/favicon.ico"
                        :rel "icon"}
                       {:href "https://fonts.googleapis.com"
                        :rel "preconnect"}
