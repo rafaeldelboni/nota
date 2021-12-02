@@ -73,4 +73,4 @@ if (!todo.done) complete(todo) // × compilation success
 
 Because types only exist at compilation time, if you are creating a typed variable from
 input external to your code *(e.g.: http request, form input, etc...)*, a validation check is still required.
-Next time, I'd like to explore a more seamlessly validation layer for this cases.
+Next time, I'd like to explore a more seamlessly validation layer for these cases.
