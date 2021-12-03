@@ -69,6 +69,7 @@ function fancyAlert(arg) {
   }
 }
 ```
+*(syntax is hilighted using [PrismJs](https://prismjs.com/))*
 
 You can also simply indent your code by four spaces:
 
@@ -77,6 +78,8 @@ You can also simply indent your code by four spaces:
         $.facebox({div:'#foo'})
       }
     }
+
+*(Be aware the code won't be highlighted because the language cannot be identified by prism)*
 
 ## Task Lists
 
