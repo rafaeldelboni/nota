@@ -28,8 +28,9 @@
      [:meta {:charset "utf-8"}]
      [:meta {:http-equiv "x-ua-compatible" :content "ie=edge"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1, maximum-scale=1"}]
-     (for [{:keys [href rel htype]} links]
-       [:link {:rel rel
+     (for [{:keys [id href rel htype]} links]
+       [:link {:id id
+               :rel rel
                :type htype
                :href href}])]
     [:body
@@ -53,10 +54,14 @@
                        :rel "stylesheet"}
                       {:href "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
                        :rel "stylesheet"}
+                      {:id "prism-theme"
+                       :href "https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css"
+                       :rel "stylesheet"}
                       {:href "./css/nota.min.css"
                        :rel "stylesheet"
                        :htype "text/css"}]
-          :scripts   []
+          :scripts   ["https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-core.min.js"
+                      "https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js"]
           :lang      "en"
           :app-mount :div#app}
          options))

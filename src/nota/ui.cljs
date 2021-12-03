@@ -3,6 +3,7 @@
             [com.fulcrologic.fulcro.dom :as dom]
             [com.fulcrologic.fulcro.react.hooks :as hooks]
             [com.fulcrologic.fulcro.routing.dynamic-routing :as dr :refer [defrouter]]
+            [goog.string :refer [format]]
             [nota.routing :as routing]
             [nota.ui.icons :as ui.icons]
             [nota.ui.pages :as ui.pages]
@@ -21,9 +22,21 @@
 
 (def ui-top-router (comp/factory TopRouter))
 
+(defn load-prism-theme
+  [theme]
+  (let [prism-theme (.getElementById js/document "prism-theme")
+        new-theme   (if (= theme "dark") "prism-okaidia" "prism")]
+    (.setAttribute
+      prism-theme
+      "href"
+      (format
+        "https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/%s.min.css"
+        new-theme))))
+
 (defn toggle-theme [current-theme hook-change-theme-fn]
   (let [toggled-theme (if (= current-theme "dark") "light" "dark")]
     #(do (hook-change-theme-fn toggled-theme)
+         (load-prism-theme toggled-theme)
          (set! (.. js/document -documentElement -className) toggled-theme))))
 
 (defsc Header [_this {:keys [list-pages]}]
