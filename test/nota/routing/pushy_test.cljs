@@ -10,7 +10,7 @@
 (def history
   (pushy/pushy secretary/dispatch!
                (fn [x] (when (secretary/locate-route x) x))
-               identity))
+               :identity-fn identity))
 
 (defroute foo-route "/foo" []
   (reset! test-val true))
