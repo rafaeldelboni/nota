@@ -16,21 +16,21 @@ jobs:
 
     steps:
     - name: Clone Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3.0.2
 
     - name: Prepare java
-      uses: actions/setup-java@v2.5.0
+      uses: actions/setup-java@v3.3.0
       with:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Install clojure tools-deps
+    - name: Install clojure cli
       uses: DeLaGuardo/setup-clojure@master
       with:
-        tools-deps: 1.10.3.1075
+        cli: 1.11.1.1113
 
     - name: Test ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.5.1
+      uses: actions/setup-node@v3.2.0
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.0.2
 
       - name: Setup Babashka
         uses: turtlequeue/setup-babashka@v1.3.0
@@ -66,21 +66,21 @@ jobs:
 
     steps:
     - name: Clone Repo
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3.0.2
 
     - name: Prepare java
-      uses: actions/setup-java@v2.5.0
+      uses: actions/setup-java@v3.3.0
       with:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Install clojure tools-deps
+    - name: Install clojure cli
       uses: DeLaGuardo/setup-clojure@master
       with:
-        tools-deps: 1.10.3.1075
+        cli: 1.11.1.1113
 
     - name: Build ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.5.1
+      uses: actions/setup-node@v3.2.0
       with:
         node-version: ${{ matrix.node-version }}
     - run: |
