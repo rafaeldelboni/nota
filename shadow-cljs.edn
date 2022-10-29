@@ -1,5 +1,5 @@
 {:deps     {:aliases [:dev :tests]}
- :dev-http {8000 "classpath:public"}
+ :dev-http {8000 "resources/public"}
  :builds   {:tests       {:target           :browser-test
                           :build-hooks      [(nota.hooks.build/hook)]
                           :test-dir         "resources/public/js/test"
