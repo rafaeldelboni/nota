@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os-version: [ubuntu-latest]
-        node-version: [14.x]
+        node-version: [16.x]
     runs-on: ${{ matrix.os-version }}
 
     steps:
@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         os-version: [ubuntu-latest]
-        node-version: [14.x]
+        node-version: [16.x]
     runs-on: ${{ matrix.os-version }}
 
     steps:
