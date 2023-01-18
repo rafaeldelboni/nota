@@ -17,15 +17,15 @@
   "dependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-markdown": "^8.0.3",
+    "react-markdown": "^8.0.5",
     "remark-gfm": "^3.0.1",
-    "shadow-cljs": "^2.20.7"
+    "shadow-cljs": "^2.20.20"
   },
   "devDependencies": {
     "karma": "^6.4.1",
     "karma-chrome-launcher": "^3.1.1",
     "karma-cljs-test": "^0.1.0",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.55.0"
+    "sass": "^1.57.1"
   }
 }
