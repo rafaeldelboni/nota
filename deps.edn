@@ -1,6 +1,6 @@
 {:paths   ["src" "resources"]
  :deps    {org.clojure/clojure    {:mvn/version "1.11.1"}
-           com.fulcrologic/fulcro {:mvn/version "3.5.28"}
+           com.fulcrologic/fulcro {:mvn/version "3.5.34"}
            com.wsscode/pathom     {:mvn/version "2.4.0"}
            aero/aero              {:mvn/version "1.1.6"}}
 
@@ -9,7 +9,7 @@
            :dev {:extra-paths ["src/dev"]
                  :extra-deps  {org.clojure/clojurescript   {:mvn/version "1.11.60"}
                                clj-commons/secretary       {:mvn/version "1.2.4"}
-                               thheller/shadow-cljs        {:mvn/version "2.20.7"}
+                               thheller/shadow-cljs        {:mvn/version "2.20.20"}
                                hiccup/hiccup               {:mvn/version "1.0.5"}
                                binaryage/devtools          {:mvn/version "1.0.6"}
-                               cider/cider-nrepl           {:mvn/version "0.28.7"}}}}}
+                               cider/cider-nrepl           {:mvn/version "0.29.0"}}}}}
