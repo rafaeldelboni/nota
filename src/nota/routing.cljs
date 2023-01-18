@@ -15,8 +15,12 @@
                                   (remove str/blank?)
                                   (str/join "/")))))
 
+(defn get-path-prefix []
+  (str/replace (.. js/window -location -pathname) #"/" ""))
+
 (defn create-history [app]
-  (let [{:keys [app-prefix path-prefix default-route]} env/config]
+  (let [path-prefix (get-path-prefix)
+        {:keys [app-prefix default-route]} env/config]
     (pushy/pushy (fn [path]
                  (let [real-path (if (= (first path) "/")
                                    path

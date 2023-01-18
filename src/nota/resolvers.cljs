@@ -4,16 +4,16 @@
             [nota.logics :as logics]))
 
 (pc/defresolver page-body-resolver
-  [{:keys [config fetch-text-fn]} {:page/keys [path]}]
+  [{:keys [fetch-text-fn]} {:page/keys [path]}]
   {::pc/input  #{:page/path}
    ::pc/output [:page/body]}
-  (fetch-text-fn :page/body path config))
+  (fetch-text-fn :page/body path))
 
 (pc/defresolver post-body-resolver
-  [{:keys [config fetch-text-fn]} {:post/keys [path]}]
+  [{:keys [fetch-text-fn]} {:post/keys [path]}]
   {::pc/input  #{:post/path}
    ::pc/output [:post/body]}
-  (fetch-text-fn :post/body path config))
+  (fetch-text-fn :post/body path))
 
 (pc/defresolver page-resolver [{:keys [database-fn]} {:page/keys [id]}]
   {::pc/input  #{:page/id}
