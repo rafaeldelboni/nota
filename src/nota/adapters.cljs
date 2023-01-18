@@ -65,3 +65,9 @@
         (string/replace "dddd" (-> datetime .getUTCDay weekday->string vals first))
         (string/replace "ddd" (-> datetime .getUTCDay weekday->string keys first))
         (string/replace "dd" (-> datetime .getUTCDate num->zeropad-string)))))
+
+(defn location-pathname->path-prefix
+  [location-pathname]
+  (-> location-pathname
+      (string/replace #"^/" "")
+      (string/replace #"/$" "")))

@@ -80,3 +80,11 @@
   (is (= (adapters/timestamp->utc-string 978336061000 "dd/mm/yyyy hh:MM:ss") "01/01/2001 08:01:01"))
   (is (= (adapters/timestamp->utc-string 978336061000 "yyyy-mm-ddThh:MM:ss") "2001-01-01T08:01:01"))
   (is (= (adapters/timestamp->utc-string 978336061000 "mmmm, mmm, dddd, ddd, yyyy-mm-ddThh:MM:ss") "January, Jan, Tuesday, Tue, 2001-01-01T08:01:01")))
+
+
+(deftest location-pathname->path-prefix-test
+  (is (= (adapters/location-pathname->path-prefix "/"      ) ""))
+  (is (= (adapters/location-pathname->path-prefix "/aa"    ) "aa"))
+  (is (= (adapters/location-pathname->path-prefix "/aa/"   ) "aa"))
+  (is (= (adapters/location-pathname->path-prefix "/aa/bb" ) "aa/bb"))
+  (is (= (adapters/location-pathname->path-prefix "/aa/bb/") "aa/bb")))
