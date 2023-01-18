@@ -48,7 +48,6 @@
                              (adapters/hashmap->map-list-id :post/id)
                              (logics/order-by-desc :post/timestamp))})
 
-
 (def alias-list-posts-tag-id (pc/alias-resolver :list-posts-tag/id :tag/id))
 
 (pc/defresolver post-resolver [{:keys [database-fn]} {:post/keys [id]}]

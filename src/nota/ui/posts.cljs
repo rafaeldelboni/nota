@@ -41,7 +41,7 @@
   (if body
     (dom/div
      (dom/div :.inline
-            (map link-tags tags))
+              (map link-tags tags))
      (ui.markdown/render {:body body})
      (dom/h3 (adapters/timestamp->utc-string timestamp " mmm dd, yyyy")))
     (dom/div "loading")))
@@ -54,13 +54,13 @@
            :ui/fetch-state]
    :ident [:posts/by-id :post/id]}
   (dom/section {:classes ["nota-posts"]}
-   (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
-          (dom/p :.inline
-                 (dom/span :.post-title
-                           name)
-                 (dom/span :.post-subtitle
-                           (adapters/timestamp->utc-string timestamp " mmm dd, yyyy"))))
-   (dom/p description)))
+               (dom/a {:onClick #(routing/route-to! (dr/path-to Post id))}
+                      (dom/p :.inline
+                             (dom/span :.post-title
+                                       name)
+                             (dom/span :.post-subtitle
+                                       (adapters/timestamp->utc-string timestamp " mmm dd, yyyy"))))
+               (dom/p description)))
 
 (def ui-list-post (comp/factory ListPost {:keyfn :post/id}))
 
