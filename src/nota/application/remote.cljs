@@ -12,25 +12,25 @@
   given eql-query."
   [{:keys [parser] :as options}]
   (merge options
-    {:transmit! (fn transmit! [{:keys [_active-requests]} {:keys [::txn/ast ::txn/result-handler ::txn/update-handler] :as _send-node}]
-                  (let [edn           (eql/ast->query ast)
-                        ok-handler    (fn [result]
-                                        (try
-                                          (result-handler (select-keys result #{:transaction :status-code :body :status-text}))
-                                          (catch :default e
-                                            (js/console.error e "Result handler failed with an exception."))))
-                        error-handler (fn [error-result]
-                                        (try
-                                          (result-handler (merge {:status-code 500} (select-keys error-result #{:transaction :status-code :body :status-text})))
-                                          (catch :default e
-                                            (js/console.error e "Error handler failed with an exception."))))]
-                    (try
-                      (async/go
-                        (let [result (async/<! (parser edn))]
-                          (ok-handler {:transaction edn :status-code 200 :body result})))
-                      (catch :default _e
-                        (error-handler {:transaction edn :status-code 500})))))
-     :abort!    (fn abort! [_this _id])}))
+         {:transmit! (fn transmit! [{:keys [_active-requests]} {:keys [::txn/ast ::txn/result-handler ::txn/update-handler] :as _send-node}]
+                       (let [edn           (eql/ast->query ast)
+                             ok-handler    (fn [result]
+                                             (try
+                                               (result-handler (select-keys result #{:transaction :status-code :body :status-text}))
+                                               (catch :default e
+                                                 (js/console.error e "Result handler failed with an exception."))))
+                             error-handler (fn [error-result]
+                                             (try
+                                               (result-handler (merge {:status-code 500} (select-keys error-result #{:transaction :status-code :body :status-text})))
+                                               (catch :default e
+                                                 (js/console.error e "Error handler failed with an exception."))))]
+                         (try
+                           (async/go
+                             (let [result (async/<! (parser edn))]
+                               (ok-handler {:transaction edn :status-code 200 :body result})))
+                           (catch :default _e
+                             (error-handler {:transaction edn :status-code 500})))))
+          :abort!    (fn abort! [_this _id])}))
 
 (defn new-parser [my-resolvers]
   (p/parallel-parser

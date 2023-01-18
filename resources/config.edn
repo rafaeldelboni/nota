@@ -1,4 +1,2 @@
-{:path-prefix #profile {:dev     ""
-                        :release "nota"}
- :app-prefix "#"
+{:app-prefix "#"
  :default-route "home"}

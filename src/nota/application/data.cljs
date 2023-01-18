@@ -3,6 +3,7 @@
             [cljs.core.async.interop :refer-macros [<p!]]
             [cljs.reader :as reader]
             [clojure.string :as str]
+            [nota.routing :as routing]
             [shadow.resource :as rc]))
 
 (def data (reader/read-string (rc/inline "../../data.edn")))
@@ -14,9 +15,9 @@
    data))
 
 (defn fetch-text-fn
-  [id-key path config]
+  [id-key path]
   (async/go
-    (let [path-prefix (:path-prefix config)
+    (let [path-prefix (routing/get-path-prefix)
           result (<p! (-> (if-not (str/blank? path-prefix)
                             (str "/" path-prefix "/" path)
                             (str "/" path))

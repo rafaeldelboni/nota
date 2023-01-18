@@ -13,8 +13,7 @@
 (declare =>)
 
 (def mock-config
-  {:path-prefix ""
-   :app-prefix "#"
+  {:app-prefix "#"
    :default-route "home"})
 
 (def mock-database
@@ -30,7 +29,7 @@
    mock-database))
 
 (defn mock-fetch-text-fn
-  [_ _ _]
+  [_ _]
   "#fetchbody")
 
 (defn create-app []

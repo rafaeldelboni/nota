@@ -18,7 +18,6 @@
                                                    :database-fn data/database-fn
                                                    :fetch-text-fn data/fetch-text-fn})}}))
 
-
 (defn ^:export init []
   (app/set-root! nota-app ui/Root {:initialize-state? true})
   (dr/initialize! nota-app)

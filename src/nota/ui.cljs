@@ -27,11 +27,11 @@
   (let [prism-theme (.getElementById js/document "prism-theme")
         new-theme   (if (= theme "dark") "prism-okaidia" "prism")]
     (.setAttribute
-      prism-theme
-      "href"
-      (format
-        "https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/%s.min.css"
-        new-theme))))
+     prism-theme
+     "href"
+     (format
+      "https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/%s.min.css"
+      new-theme))))
 
 (defn toggle-theme [current-theme hook-change-theme-fn]
   (let [toggled-theme (if (= current-theme "dark") "light" "dark")]

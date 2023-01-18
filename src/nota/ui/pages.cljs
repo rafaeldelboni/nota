@@ -23,7 +23,7 @@
   (if body
     (dom/section
      (dom/article
-       (markdown/render {:body body})))
+      (markdown/render {:body body})))
     (dom/section "loading")))
 
 (defsc ListPage [_this {:page/keys [id name] :as props}]
