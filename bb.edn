@@ -1,7 +1,7 @@
 {:paths ["scripts"]
  :min-bb-version "0.4.0"
- :deps {babashka/fs {:mvn/version "0.2.14"}
-        borkdude/rewrite-edn {:mvn/version "0.4.6"}
+ :deps {babashka/fs {:mvn/version "0.5.23"}
+        borkdude/rewrite-edn {:mvn/version "0.4.8"}
         dev.nubank/docopt {:mvn/version "0.6.1-fix7"}}
  :tasks {new:post nota.main/new-post
          del:post nota.main/del-post
